@@ -1,0 +1,14 @@
+<nz-list [nzDataSource]="UserPlayList" [nzRenderItem]="item" [nzItemLayout]="' horizontal'" [nzLoadMore]="loadMorePlaylistTpl">
+  <ng-template #item let-item>
+    <nz-list-item class="pointerCursor" (click)="choosePlayListSuccess(item)" >
+      <nz-list-item-meta [nzTitle]="item.name" [nzAvatar]="item.picUrl" [nzDescription]="item.trackCount+' 首音乐'">
+      </nz-list-item-meta>
+    </nz-list-item>
+  </ng-template>
+  <ng-template #loadMorePlaylistTpl>
+    <div class="loadMoreDiv">
+      <button nz-button *ngIf="!userPlayListPageInfo.isLoading&&userPlayListPageInfo.more"
+        (click)="userPlayListPageInfo.fetchNextPage()">加载更多</button>
+    </div>
+  </ng-template>
+</nz-list>

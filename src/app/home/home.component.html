@@ -1,0 +1,209 @@
+
+<nz-spin [nzTip]="'加载中...'" [nzSpinning]="!personalityRecommend" nzSize="large" >
+  <div class="homeRoot" *ngIf="personalityRecommend">
+   <div class="carouselRoot">
+      <nz-carousel [nzEffect]="'fade'" nzAutoPlay nzAutoPlaySpeed="1200">
+      <div nz-carousel-content *ngFor="let banner of personalityRecommend.bannerList">
+        <div (click)="bannerClick(banner)" class="pointerCursor">
+          <img [src]="banner.picUrl" style="display: block; width: 100%;">
+        </div>
+      </div>
+    </nz-carousel>
+   </div>
+  
+    <div class="tdMargin">
+      <div nz-row nzGutter="16" nzJustify="center" nzAlign="center">
+        <div nz-col nzSpan="8">
+          <div class="btnTowLine" (click)="personalFMClick()">
+            <button nz-button nzType="default" nzShape="circle" nzSize="large">
+              <i nz-icon [nzIconfont]="'icon-shouyinji-xian'"></i>
+            </button>
+            <div class="flexLastFull">
+              <div class="btnTwolineTop">私人FM</div>
+              <div class="windowSmallDescriptionFont">享受你的音乐时光</div>
+            </div>
+            <nz-divider nzType="vertical" class="btnTowLineRightLine"></nz-divider>
+          </div>
+  
+        </div>
+        <div nz-col nzSpan="8" [routerLink]="[ '/everydaymusic']">
+          <div class="btnTowLine">
+            <button nz-button nzType="default" nzShape="circle" nzSize="large">{{today}}</button>
+            <div class="flexLastFull">
+              <div class="btnTwolineTop">每日歌曲推荐</div>
+              <div class="windowSmallDescriptionFont">根据你的口味生成</div>
+            </div>
+            <nz-divider nzType="vertical" class="btnTowLineRightLine"></nz-divider>
+          </div>
+  
+        </div>
+        <div nz-col nzSpan="8" [routerLink]="[ '/billboard']">
+          <div class="gutter-box">
+            <div class="btnTowLine">
+              <button nz-button nzType="default" nzShape="circle" nzSize="large">
+                <i nz-icon [nzIconfont]="'icon-paihangbang'"></i>
+              </button>
+              <div class="flexLastFull">
+                <div class="btnTwolineTop">排行榜</div>
+                <div class="windowSmallDescriptionFont">最热音乐榜</div>
+              </div>
+              <nz-divider nzType="vertical" class="btnTowLineRightLine"></nz-divider>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+      <!-- 歌单部分 -->
+      <div class="moreRegion">
+        <div class="moreRegion leftpart">
+          <i nz-icon nzType="calendar" nzTheme="outline"></i>
+          &nbsp;推荐歌单
+        </div>
+        <a [routerLink]="['/playList']" class="smallLink">更多&lt;</a>
+      </div>
+      <nz-list class="playlist" [nzDataSource]="personalityRecommend.recommendList" nzItemLayout="horizontal"
+        [nzGrid]="{ gutter: 16, xs: 24, sm: 12, md: 6, lg: 6, xl: 4 }" [nzRenderItem]="item" nzSplit="false">
+        <ng-template #item let-playlist>
+          <nz-list-item [nzContent]="content">
+            <ng-template #content>
+              <nz-card nzHoverable [nzCover]="coverTemplate" (click)="clickPlayList(playlist)">
+                <nz-card-meta [nzTitle]="playlist.name" [nzDescription]="playlist.copyWriter"
+                  style="white-space: nowrap;text-overflow: ellipsis;width: 100%">
+                </nz-card-meta>
+                <ng-template #coverTemplate>
+                  <!-- <div class="card-image">
+                        
+                      </div> -->
+  
+                  <div class="card-back" [style.background-image]="'url(' + playlist.picUrl+ ')'">
+  
+  
+                    <div class="flexLastFull"></div>
+  
+                    <div class="inlineCount">
+                      <i nz-icon nzType="customer-service" nzTheme="outline"></i>
+                      {{playlist.playCount | countpipe}}
+                    </div>
+  
+  
+                  </div>
+  
+  
+  
+                </ng-template>
+  
+              </nz-card>
+            </ng-template>
+  
+          </nz-list-item>
+        </ng-template>
+  
+      </nz-list>
+      <!-- 歌单部分 -->
+      <!-- 独家放送 -->
+      <div class="moreRegion">
+        <div class="moreRegion leftpart">
+          <i nz-icon nzType="notification" nzTheme="outline"></i>
+          &nbsp;独家放送
+        </div>
+        <a routerLink='playList' class="smallLink">更多&lt;</a>
+      </div>
+      <nz-list [nzDataSource]="personalityRecommend.privateContentList" [nzRenderItem]="privatelistitem"
+        [nzGrid]="{ gutter: 16 ,span:8 }">
+        <ng-template #privatelistitem let-iprivate>
+          <nz-list-item [nzContent]="privateContent">
+            <ng-template #privateContent>
+              <nz-card nzBordered="false" nzHoverable (click)="clickPrivateContent(iprivate)" [nzCover]="privateConver">
+  
+                <ng-template #privateConver>
+                  <img [src]="iprivate.imageSource" [alt]="iprivate.realUrl">
+                </ng-template>
+                <nz-card-meta [nzTitle]="iprivate.text" style="white-space: nowrap;text-overflow: ellipsis;width: 100%">
+                </nz-card-meta>
+              </nz-card>
+            </ng-template>
+  
+          </nz-list-item>
+        </ng-template>
+      </nz-list>
+      <!-- 独家放送 -->
+      <!-- 最新音乐 -->
+      <div class="moreRegion">
+        <div class="moreRegion leftpart">
+          <i nz-icon nzType="snippets" nzTheme="outline"></i>
+          &nbsp;最新音乐
+        </div>
+        <a [routerLink]="[ '/newestMusics']" class="smallLink">更多&lt;</a>
+      </div>
+      <nz-list [nzDataSource]="personalityRecommend.newMusicList" [nzRenderItem]="musicitem" id='lstNewMausic'
+        [nzGrid]="{gutter:8,span:12}">
+        <ng-template #musicitem let-music>
+          <div class="nothing" (click)="newMusicListItemClick(music)">
+            <div class="musiclist">
+              <img [src]="music.picUrl" />
+              <div class="musicdisplayinfo">
+                <div class="mvboxdiv">
+                  {{music.name}}
+  
+                  <a [routerLink]="[ '/mv', music.mvId ]" *ngIf="music.mvId>0" class="mv-a-div">MV</a>
+                </div>
+                <div class="mvboxdiv">
+                  <div *ngIf="music.musicQuality!=0" class="mv-a-div">Sq</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </nz-list>
+      <!-- 最新音乐 -->
+      <!-- 推荐mv -->
+      <div class="moreRegion">
+        <div class="moreRegion leftpart">
+          <i nz-icon nzType="video-camera" nzTheme="outline"></i>
+          &nbsp;推荐MV
+        </div>
+        <a [routerLink]="['/playList']" class="smallLink">更多&lt;</a>
+      </div>
+      <nz-list [nzDataSource]="personalityRecommend.recommendMvList" [nzRenderItem]="mvlistitem"
+        [nzGrid]="{ gutter: 16 ,span:6 }">
+        <ng-template #mvlistitem let-ipmv>
+          <nz-list-item [nzContent]="mvContent">
+            <ng-template #mvContent>
+              <nz-card nzBordered="false" nzHoverable (click)="clickMv(ipmv)" [nzCover]="mvConver">
+                <ng-template #mvConver>
+                  <img [src]="ipmv.picUrl" />
+                </ng-template>
+                <nz-card-meta [nzTitle]="ipmv.name" style="white-space: nowrap;text-overflow: ellipsis;width: 100%">
+                </nz-card-meta>
+              </nz-card>
+            </ng-template>
+  
+          </nz-list-item>
+        </ng-template>
+      </nz-list>
+      <!-- 推荐mv -->
+      <div class="moreRegion">
+        <div class="moreRegion leftpart">
+          <i nz-icon nzType="link" nzTheme="outline"></i>
+          &nbsp;主播电台
+        </div>
+        <a [routerLink]="['/playList']" class="smallLink">更多&lt;</a>
+      </div>
+      <nz-list [nzDataSource]="personalityRecommend.anchorRadioList" [nzRenderItem]="anchorRadioItem"
+        [nzGrid]="{gutter:8,span:12}">
+        <ng-template #anchorRadioItem let-anchorRadio>
+          <nz-list-item (click)="anchorRadioClick(anchorRadio)">
+            <div class="musiclist">
+              <img [src]="anchorRadio.picUrl" />
+              <div class="musicdisplayinfo">
+                <div>{{anchorRadio.title}}</div>
+                <div class="anchorCopyWriter">{{anchorRadio.copyWriter}}</div>
+              </div>
+            </div>
+          </nz-list-item>
+        </ng-template>
+      </nz-list>
+  
+    </div>
+  </div>
+</nz-spin>

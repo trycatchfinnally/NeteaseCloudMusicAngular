@@ -1,0 +1,65 @@
+<div>
+  <div class="indirectViewTopPart">
+    <div class="topDayCard">{{date}}</div>
+    <div class="indirectViewTopPartRight">
+      <div class="windowMainFont">每日歌曲推荐</div>
+      <div class="windowSmallFont">根据你的口味生成，每日6:00生成</div>
+    </div>
+  </div>
+  <div class="centerControlPart">
+    <div class="windowSmallFont pointerCursor"   (click)="addToPlay.playAll()" >
+      <i nz-icon nzType="play-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'#bc2f2e'"></i>
+      播放全部（{{addToPlay.data.length}}）
+    </div>
+    <nz-divider nzType="vertical" style="background: black;height:20px"></nz-divider>
+    <div *ngIf="!addToPlay.isSelectMode"   class="windowSmallFont pointerCursor" (click)="addToPlay.changeSelectMode()">
+      <i nz-icon nzType="ordered-list" nzTheme="outline"></i>
+      选择
+    </div>
+    <div *ngIf="addToPlay.isSelectMode" class="windowSmallFont ceterSelectModePart" (click)="addToPlay.changeSelectMode()">
+      <i nz-icon nzType="check-circle" nzTheme="outline"></i>
+      完成
+    </div>
+  </div>
+  <div class="bottomListPart">
+    <nz-list [nzDataSource]="addToPlay.data" [nzRenderItem]="musicUi" [nzSplit]="false" id='lstMain'>
+      <ng-template #musicUi let-music>
+        <div   (click)="addToPlay.seleteOrPlay(music)" class="nothing">
+          <div class="windowSmallFont bottomListItem">
+            <ng-container *ngIf="addToPlay.isSelectMode">
+              <label nz-checkbox [(ngModel)]="music.isSelected" style="padding-right: 5px"></label>
+            </ng-container>
+
+            <div  class="pointerCursor" (click)="addToPlay.likeOrHateClick(music)" style="padding-right: 5px">
+              <i nz-icon nzType="heart" nzTheme="outline" *ngIf="!music.isLike"></i>
+              <i nz-icon nzType="heart" nzTheme="outline" *ngIf="music.isLike" [nzTheme]="'twotone'"
+                [nzTwotoneColor]="'#ff0000'"></i>
+            </div>
+            <div style="padding-right: 2px">{{music.name}}</div>
+            <div *ngIf="music.mvId >0"><a [routerLink]="[ '/mv' ,music.mvId]" 
+                class="bottomListItemMv">MV</a>
+            </div>
+            <div class="flexLastFull"></div>
+            <div class="bottomListItemRightPart">
+              <div style="width: 150px">
+                <ng-container *ngFor="let artist of music.artists;let idex=index">
+                  <a *ngIf="idex<=3" [routerLink]="[ '/artist',artist.id]"  
+                    class="smallLink">{{artist.name}}&nbsp;</a>
+                </ng-container>
+              </div>
+              <a [routerLink]="[ '/album',music.album.id]"   class="smallLink"
+                style="width: 150px">{{music.album.name}}</a>
+              <div style="width: 70px">{{music.duration |duration}}</div>
+
+
+
+            </div>
+          </div>
+        </div>
+
+
+      </ng-template>
+    </nz-list>
+  </div>
+ 
+</div>

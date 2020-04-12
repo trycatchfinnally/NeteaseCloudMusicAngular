@@ -1,0 +1,73 @@
+<div class="headerRoot">
+  <ng-content></ng-content>
+  <h1 class="logo">
+    <a routerLink="/home"><img alt="" src="../../assets/Icon.png" /> 网易云音乐</a>
+  </h1>
+  <div class="headerInput">
+    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+      <input
+        type="text"
+        nz-input
+        placeholder="搜索音乐、歌手、歌词、用户"
+        [(ngModel)]="searchKey"
+        #inputKeyWord
+      />
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+      <button nz-button nzType="default" (click)="headerSearchClick()">
+        <i nz-icon nzType="search"></i>
+      </button>
+    </ng-template>
+    <ul
+      *ngIf="searchKeyWordSuggest && searchKeyWordSuggest.length > 0"
+      class="headerSearchSuggest"
+    >
+      <ng-container *ngFor="let suggest of searchKeyWordSuggest">
+        <li
+          class="margin10px  pointerCursor"
+          (click)="selectInputSuggest(suggest)"
+        >
+          <span>{{ suggest }}</span>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+  <div class="headerLinks">
+    <div *ngIf="!logService.IsLoginIn" class="headerRegist">
+      <a class="headerRegistDiv" (click)="register()"
+        >注册</a
+      >
+      <div class="headerRegistDiv" (click)="login()">登录</div>
+    </div>
+    <div *ngIf="logService.IsLoginIn" class="loginUserpart">
+      
+      <nz-dropdown [nzPlacement]="'bottomCenter'">
+        <nz-badge
+          nz-dropdown
+          [nzCount]="logService.loginUser.eventCount"
+          style="margin-right: 24px;"
+        >
+          <nz-avatar
+            nzIcon="user"
+            [nzSrc]="logService.loginUser.userImage"
+          ></nz-avatar>
+        </nz-badge>
+        <ul nz-menu >
+          <li nz-menu-item>
+            <a (click)="logService.LogOut()" >注销登录</a>
+          </li>
+           <li nz-menu-item>
+            <a [routerLink]="[ '/changeUserInfo']">修改个人信息</a>
+          </li>
+        </ul>
+      </nz-dropdown>
+    </div>
+    <a
+      href="https://github.com/trycatchfinnally/NeteaseCloudMusic"
+      title="已过时，很多api已废弃"
+      >下载客户端</a
+    >
+    <a href="mailto:t1246539858@outlook.com">联系作者</a>
+    <a href="https://miy40pp.kuaizhan.com/#/jump?inviteCode=R3ZZWN&osType=1" target="_blank">购物领券</a>
+  </div>
+</div>

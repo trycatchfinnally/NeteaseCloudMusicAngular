@@ -1,0 +1,123 @@
+.homeRoot {
+  margin: 0 auto;
+}
+.tdMargin {
+  margin: 10px 10px 0 10px;
+}
+.btnTowLine {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.btnTowLine button {
+  width: 60px;
+  height: 60px;
+  border-color: red;
+  margin: 2px;
+  color: red;
+  font-size: xx-large;
+}
+.btnTwolineTop {
+  font-size: larger;
+}
+
+.btnTowLineRightLine {
+  background: gray;
+  height: 60px;
+  float: right;
+}
+.moreRegion {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 40px;
+  margin: 5px;
+}
+.moreRegion .leftpart {
+  flex-grow: 1;
+}
+.moreRegion a {
+  width: 60px;
+}
+/* .card-image{
+    max-width: 240px;
+} */
+
+.playlist ::ng-deep .ant-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+.card-image .image {
+  width: 100%;
+  height: 100%;
+}
+.inlineCount {
+  float: right;
+  background: linear-gradient(
+    left,
+    rgba(255, 255, 255, 0.062),
+    rgba(0, 0, 0, 0.6)
+  );
+  height: 20px;
+  margin: 5px;
+  width: auto;
+  color: #fff;
+  font-size: small;
+}
+.card-back {
+  background-size: cover;
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+  display: flex;
+}
+
+.musiclist {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.musiclist img {
+  width: 48px;
+  height: 48px;
+  margin: 5px;
+}
+
+#lstNewMausic .nothing:nth-of-type(even) {
+  background: #dcdcdc;
+}
+#lstNewMausic .nothing:nth-of-type(odd) {
+  background: transparent;
+}
+#lstNewMausic .nothing:hover {
+  background: #bcbcbd;
+}
+.musicdisplayinfo {
+  flex-grow: 1;
+}
+.mvboxdiv {
+  display: flex;
+  align-items: center;
+}
+.mv-a-div {
+  border: red;
+  border-style: solid;
+  border-width: 1px;
+  color: red;
+  font-size: xx-small;
+  margin: 2px;
+}
+.anchorCopyWriter {
+  font-style: italic;
+  color: gray;
+  font-size: xx-small;
+}
+.carouselRoot{
+  background-image: url("../../assets/CarouselBackground.jpg");
+  background-size: 6000px;
+  background-position: center center;
+}
+.carouselRoot nz-carousel{
+  max-width: 1080px;
+  margin: auto;
+}

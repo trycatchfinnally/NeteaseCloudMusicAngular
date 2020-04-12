@@ -1,0 +1,91 @@
+<div class="margin10px">
+  <div class="flexCenterDiv">
+    <nz-dropdown *ngIf="checkedCategort">
+      <button nz-button nz-dropdown class="categoryDropdown marginH10px">
+        <span>{{ checkedCategort.name }}</span> <i nz-icon type="down"></i>
+      </button>
+      <div nz-menu class="categoryPanel">
+       <app-playlistcategorys  (catSelectChange)="catSelectChange($event)">
+
+       </app-playlistcategorys>
+      </div>
+    </nz-dropdown>
+    <ng-container
+      *ngFor="let category of hotPlayListCategories; let idx = index"
+    >
+      <div class="smallLink" (click)="checkedCategort = category">
+        {{ category.name }}
+      </div>
+      <nz-divider
+        nzType="vertical"
+        *ngIf="idx < hotPlayListCategories.length - 1"
+      ></nz-divider>
+    </ng-container>
+  </div>
+  <div class="margin10px">
+    <nz-spin
+      [nzTip]="'加载中...'"
+      [nzSpinning]="topCategoryPlaylists.isLoading"
+      nzSize="large"
+    >
+      <nz-list
+        [nzDataSource]="topCategoryPlaylists.data"
+        [nzGrid]="{ gutter: 8, xs: 24, sm: 12, md: 6, lg: 6, xl: 4 }"
+        nzSplit="false"
+        [nzRenderItem]="playlistItem"
+        [nzLoadMore]="loadMorePlaylistTpl"
+      >
+        <ng-template #playlistItem let-playlist>
+          <nz-list-item [nzContent]="playlistcontent">
+            <ng-template #playlistcontent>
+              <nz-card
+                nzHoverable
+                [nzCover]="coverTemplate"
+                [routerLink]="['/playlistdetail', playlist.id]"
+              >
+                <nz-card-meta
+                  [nzTitle]="playlist.name"
+                  [nzDescription]="descriptionTemplate"
+                  class="noWrap"
+                >
+                </nz-card-meta>
+                <ng-template #coverTemplate>
+                  <!-- <div class="card-image">
+                        
+                      </div> -->
+
+                  <div
+                    class="card-back"
+                    [style.background-image]="'url(' + playlist.picUrl + ')'"
+                  >
+                    <div class="flexLastFull"></div>
+                  </div>
+                </ng-template>
+                <ng-template #descriptionTemplate>
+                  <div class="flexCenterDiv">
+                    <ng-container *ngIf="playlist.createUser"
+                      >by {{ playlist.createUser.userName }}</ng-container
+                    >
+                  </div>
+                </ng-template>
+              </nz-card>
+            </ng-template>
+          </nz-list-item>
+        </ng-template>
+        <ng-template #loadMorePlaylistTpl>
+          <div class="loadMoreDiv">
+            <button
+              nz-button
+              *ngIf="
+                !topCategoryPlaylists.isLoading && topCategoryPlaylists.more
+              "
+              (click)="topCategoryPlaylists.fetchNextPage()"
+            >
+              加载更多
+            </button>
+          </div>
+        </ng-template>
+      </nz-list>
+    </nz-spin>
+  </div>
+</div>

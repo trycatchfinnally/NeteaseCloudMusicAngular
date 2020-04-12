@@ -1,0 +1,74 @@
+<div class="margin10px">
+  <div class="flexReverseCenterDiv margin10px">
+    <button nz-button nzType="default" nzSize="small">
+      <i nz-icon [nzIconfont]="' icon-call'"></i>发布视频
+    </button>
+    <button nz-button nzType="default" nzSize="small" class="marginH10px">
+      <i nz-icon nzType="edit" nzTheme="outline"></i>发新动态
+    </button>
+    <div class="flexLastFull"></div>
+    <div class="windowSmallFont">动态</div>
+  </div>
+
+  <nz-divider></nz-divider>
+  <nz-spin nzTip="正在加载中..." [nzSpinning]="isLoadding">
+    <nz-list
+      [nzDataSource]="displayEvents"
+      [nzRenderItem]="eventitem"
+      [nzLoadMore]="loadMoreEventTpl"
+    >
+      <ng-template #eventitem let-aEvent>
+        <nz-list-item>
+          <div class="fullWidth">
+            <!-- 脑壳部分 -->
+            <div class="flexCenterDiv">
+              <img
+                class="userImage"
+                [src]="aEvent.user.userImage"
+                [routerLink]="['/user', aEvent.user.userId]"
+              />
+              <div>
+                <a [routerLink]="['/user', aEvent.user.userId]">
+                  <div class="flexCenterDiv">
+                    <div>{{ aEvent.user.userName }}</div>
+                    <div>{{ aEvent.info.resourceTitle }}</div>
+                  </div>
+                </a>
+                <a class="smallLink">
+                  {{ aEvent.eventTime | date }}
+                </a>
+              </div>
+            </div>
+            <div class="marginV10px flexTopDiv">
+              <div class="userImage"></div>
+              <div class="fullWidth">
+                <!-- todo提取成一个新的组件以重用 -->
+                <app-a-event-item [aEvent]="aEvent">
+                  <div
+                    *ngIf="aEvent.jsonMessage.aEvent != null"
+                    class="aeventseventRoot"  
+                  >
+                    <app-a-event-item
+                      [aEvent]="aEvent.jsonMessage.aEvent"
+                    ></app-a-event-item>
+                  </div>
+                </app-a-event-item>
+              </div>
+            </div>
+          </div>
+        </nz-list-item>
+      </ng-template>
+      <ng-template #loadMoreEventTpl>
+        <div class="loadMoreDiv">
+          <button
+            nz-button
+            *ngIf="more && !isLoadding"
+            (click)="fetchNextPage()"
+          >
+            加载更多
+          </button>
+        </div>
+      </ng-template>
+    </nz-list>
+  </nz-spin>
+</div>

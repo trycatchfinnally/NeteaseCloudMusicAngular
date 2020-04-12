@@ -1,0 +1,242 @@
+<div>
+  <nz-spin [nzTip]="'加载中...'" [nzSpinning]="isLoadding" nzSize="large">
+  <div *ngIf="artistDetail" class="margin10px">
+    <div class="indirectViewTopPart " style="align-items: flex-start;">
+      <img [src]="artistDetail.picUrl" class="indirectViewTopPartImg" style="width: auto;">
+      <div class="indirectViewTopPartRight fullWidth marginV10px" >
+        <div class="flexCenterDiv">
+          <div class="windowXXFont">{{artistDetail.name}}</div>
+          <div class="topPartControl right5px" (click)="collectionClick()"><i nz-icon nzType="folder-add"
+              nzTheme="outline"></i>收藏</div>
+        </div>
+        <div>{{artistDetail.alias}}</div>
+        <div>
+          <div class="windowSmallFont flexCenterDiv margintop5px">单曲数：<div class="windowSmallDescriptionFont">
+              {{artistDetail.musicCount}}</div>
+          </div>
+          <div class="windowSmallFont flexCenterDiv margintop5px">专辑数：<div class="windowSmallDescriptionFont">
+              {{artistDetail.albumCount}}</div>
+          </div>
+          <div class="windowSmallFont flexCenterDiv margintop5px">MV数：<div class="windowSmallDescriptionFont">
+              {{artistDetail.mvCount}}</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <nz-tabset>
+      <nz-tab [nzTitle]="'热门'+artistDetail.hotMusics.length">
+        <div>
+          <div class="centerControlPart">
+
+            <div class="windowSmallFont pointerCursor" (click)="addToPlayService.playAll()">
+              <i nz-icon nzType="play-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'#bc2f2e'"></i>
+              播放全部（{{artistDetail.hotMusics.length}}）
+            </div>
+            <nz-divider nzType="vertical" style="background: black;height:20px"></nz-divider>
+            <div *ngIf="!addToPlayService.isSelectMode" class="windowSmallFont pointerCursor" (click)="addToPlayService.changeSelectMode()">
+              <i nz-icon nzType="ordered-list" nzTheme="outline"></i>
+              选择
+            </div>
+            <div *ngIf="addToPlayService.isSelectMode" class="windowSmallFont ceterSelectModePart" (click)="addToPlayService.changeSelectMode()">
+              <i nz-icon nzType="check-circle" nzTheme="outline"></i>
+              完成
+            </div>
+
+
+          </div>
+          <nz-list [nzDataSource]="addToPlayService.data" [nzRenderItem]="item" id="lstMain">
+            <ng-template #item let-music>
+              <div (click)="addToPlayService.seleteOrPlay(music)" [class.unavailableListItem]="music.available!=null&&!music.available" class="nothing">
+                <div class="windowSmallFont bottomListItem">
+                  <ng-container *ngIf="addToPlayService.isSelectMode">
+                    <label nz-checkbox [(ngModel)]="music.isSelected" class="rightPadding5px"></label>
+                  </ng-container>
+
+                  <div class="pointerCursor rightPadding5px" (click)="addToPlayService.likeOrHateClick(music)" >
+                    <i nz-icon nzType="heart" nzTheme="outline" *ngIf="!music.isLike"></i>
+                    <i nz-icon style="color: red;" *ngIf="music.isLike">
+                      <svg>
+                        <path
+                          d="M923 283.6c-13.4-31.1-32.6-58.9-56.9-82.8-24.3-23.8-52.5-42.4-84-55.5-32.5-13.5-66.9-20.3-102.4-20.3-49.3 0-97.4 13.5-139.2 39-10 6.1-19.5 12.8-28.5 20.1-9-7.3-18.5-14-28.5-20.1-41.8-25.5-89.9-39-139.2-39-35.5 0-69.9 6.8-102.4 20.3-31.4 13-59.7 31.7-84 55.5-24.4 23.9-43.5 51.7-56.9 82.8-13.9 32.3-21 66.6-21 101.9 0 33.3 6.8 68 20.3 103.3 11.3 29.5 27.5 60.1 48.2 91 32.8 48.9 77.9 99.9 133.9 151.6 92.8 85.7 184.7 144.9 188.6 147.3l23.7 15.2c10.5 6.7 24 6.7 34.5 0l23.7-15.2c3.9-2.5 95.7-61.6 188.6-147.3 56-51.7 101.1-102.7 133.9-151.6 20.7-30.9 37-61.5 48.2-91 13.5-35.3 20.3-70 20.3-103.3 0.1-35.3-7-69.6-20.9-101.9z" />
+                      </svg>
+                    </i>
+                  </div>
+                  <div style="padding-right: 2px">{{music.name}}</div>
+                  <div *ngIf="music.mvId >0"><a [routerLink]="[ '/mv' ,music.mvId]"  
+                      class="bottomListItemMv">MV</a>
+                  </div>
+                  <div class="flexLastFull"></div>
+                  <div class="bottomListItemRightPart noWrap windowSmallDescriptionFont">
+
+                    <div nz-row nzGutter="8" class="fullWidth">
+                      <div nz-col nzSpan="10">
+                        <ng-container *ngFor="let artist of music.artists;let idex=index">
+                          <a *ngIf="idex<=3" [routerLink]="[ '/artist',artist.id]"
+                            class="smallLink">{{artist.name}}&nbsp;</a>
+                        </ng-container>
+                      </div>
+                      <div nz-col nzSpan="9">
+                        <a [routerLink]="[ '/album',music.album.id]"   class="smallLink"
+                          style="width: 150px">{{music.album.name}}</a>
+                      </div>
+                      <div nz-col nzSpan="5">{{music.duration |duration}}</div>
+                      <!-- <div nz-col nzSpan="2"></div> -->
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </nz-list>
+        </div>
+      </nz-tab>
+      <nz-tab nzTitle="专辑">
+        <nz-list [nzDataSource]="artistAlbums.data" [nzRenderItem]="albumitem" [nzLoadMore]="loadMoreAlbumTpl"
+          [nzGrid]="{ gutter: 8, xs: 24, sm: 12, md: 6, lg: 6, xl: 4 }" nzSplit="false">
+          <ng-template #albumitem let-album>
+            <nz-list-item [nzContent]="albumcontent">
+              <ng-template #albumcontent>
+                <nz-card nzHoverable [nzCover]="coverTemplate" [routerLink]="[ '/album',album.id]">
+                  <nz-card-meta [nzTitle]="album.name" [nzDescription]="descriptionTemplate" class="noWrap">
+                  </nz-card-meta>
+                  <ng-template #coverTemplate>
+                    <!-- <div class="card-image">
+                              
+                            </div> -->
+
+                    <div class="card-back" [style.background-image]="'url(' + album.picUrl + ')'">
+
+
+                      <div class="flexLastFull"></div>
+
+
+                      <!-- <div class="inlineDuration">{{album.name}}</div> -->
+
+                    </div>
+
+
+
+                  </ng-template>
+                  <ng-template #descriptionTemplate>
+                    <div class="flexCenterDiv">
+                      {{album.createDate|date:'yyyy-MM-dd' }}
+
+                    </div>
+                  </ng-template>
+
+                </nz-card>
+              </ng-template>
+            </nz-list-item>
+
+          </ng-template>
+          <ng-template #loadMoreAlbumTpl>
+            <div class="loadMoreDiv">
+              <button nz-button *ngIf="!artistAlbums.isLoading&&artistAlbums.more"
+                (click)="artistAlbums.fetchNextPage()">加载更多</button>
+            </div>
+          </ng-template>
+        </nz-list>
+      </nz-tab>
+      <nz-tab nzTitle="MV">
+        <nz-list [nzDataSource]="artistMvs.data" [nzRenderItem]="mvsitem" [nzLoadMore]="loadMoremvTpl"
+          [nzGrid]="{ gutter: 8, xs: 24, sm: 12, md: 6, lg: 6, xl: 4 }" nzSplit="false">
+          <ng-template #mvsitem let-mv>
+            <nz-list-item [nzContent]="mvcontent">
+              <ng-template #mvcontent>
+                <nz-card nzHoverable [nzCover]="coverTemplate" [routerLink]="[ '/mv',mv.id]">
+                  <nz-card-meta [nzTitle]="mv.name" [nzDescription]="descriptionTemplate" class="noWrap">
+                  </nz-card-meta>
+                  <ng-template #coverTemplate>
+                    <!-- <div class="card-image">
+                                  
+                                </div> -->
+
+                    <div class="card-back" [style.background-image]="'url(' + mv.picUrl + ')'">
+
+
+                      <div class="flexLastFull"></div>
+
+                      <div class="inlineCount">
+                        <i nz-icon [nzIconfont]="'icon-call'"></i>
+                        {{mv.playCount | countpipe}}
+                      </div>
+                      <!-- <div class="inlineDuration">{{mv.duration}}</div> -->
+
+                    </div>
+
+
+
+                  </ng-template>
+                  <ng-template #descriptionTemplate>
+                    <div *ngIf="mv.artists" class="flexCenterDiv">
+                      <div *ngFor="let mvArtist of mv.artists;let mvArtistIndex=index">
+                        <div class="listItemHor noWrap" *ngIf="mvArtistIndex<=3" style="margin-left: 0;">
+                          {{mvArtist.name}}</div>
+                      </div>
+
+                    </div>
+                  </ng-template>
+
+                </nz-card>
+              </ng-template>
+            </nz-list-item>
+
+          </ng-template>
+          <ng-template #loadMoremvTpl>
+            <div class="loadMoreDiv">
+              <button nz-button *ngIf="!artistMvs.isLoading&&artistMvs.more"
+                (click)="artistMvs.fetchNextPage()">加载更多</button>
+            </div>
+          </ng-template>
+        </nz-list>
+      </nz-tab>
+      <nz-tab nzTitle="歌手详情">
+        <ng-container *ngFor="let introduction of artistIntroduction">
+          <div class="windowXXFont">{{introduction.key}}</div>
+          <div class="introductionText">{{introduction.value}}</div>
+        </ng-container>
+      </nz-tab>
+      <nz-tab nzTitle="相似歌手" *ngIf="simiArtists&&simiArtists.length>0">
+        <nz-list [nzDataSource]="simiArtists" [nzRenderItem]="artistitem"
+          [nzGrid]="{ gutter: 8, xs: 24, sm: 12, md: 6, lg: 6, xl: 4 }" nzSplit="false">
+          <ng-template #artistitem let-artist>
+            <nz-list-item [nzContent]="artistcontent">
+              <ng-template #artistcontent>
+                <nz-card nzHoverable [nzCover]="coverTemplate"  [routerLink]="[ '/artist',artist.id]">
+                  <nz-card-meta [nzTitle]="artist.name" class="noWrap">
+                  </nz-card-meta>
+                  <ng-template #coverTemplate>
+                    <!-- <div class="card-image">
+                              
+                            </div> -->
+
+                    <div class="card-back" [style.background-image]="'url(' + artist.picUrl + ')'">
+
+
+                      <div class="flexLastFull"></div>
+
+
+                      <!-- <div class="inlineDuration">{{album.name}}</div> -->
+
+                    </div>
+
+
+
+                  </ng-template>
+
+
+                </nz-card>
+              </ng-template>
+            </nz-list-item>
+
+          </ng-template>
+
+        </nz-list>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+ </nz-spin>
+  
+</div>

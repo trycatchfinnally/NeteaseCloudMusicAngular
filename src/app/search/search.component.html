@@ -1,0 +1,483 @@
+<div class="margin10px">
+  <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+    <input
+      type="text"
+      nz-input
+      placeholder="搜索音乐、歌手、歌词、用户"
+      [(ngModel)]="searchKey"
+      #inputKeyWord
+    />
+  </nz-input-group>
+  <ng-template #suffixIconButton>
+    <button nz-button nzType="default" (click)="doSearch()">
+      <i nz-icon nzType="search"></i>
+    </button>
+  </ng-template>
+  <ul *ngIf="searchKeyWordSuggest && searchKeyWordSuggest.length > 0">
+    <ng-container *ngFor="let suggest of searchKeyWordSuggest">
+      <li class="searchSuggestItems" (click)="selectInputSuggest(suggest)">
+        <span>{{ suggest }}</span>
+      </li>
+    </ng-container>
+  </ul>
+  <br />
+  <br />
+
+  <ng-container [ngSwitch]="searchResultShow">
+    <!-- 下面的搜索信息 -->
+    <div nz-row nzGutter="16" *ngSwitchCase="false">
+      <div nz-col nzSpan="12">
+        <ng-container>
+          热门搜索
+          <hr />
+        </ng-container>
+        <div>
+          <ng-container *ngFor="let hot of searchHots">
+            <nz-tag style="margin: 2px" (click)="searchHotsClick(hot)">{{
+              hot
+            }}</nz-tag>
+          </ng-container>
+        </div>
+      </div>
+      <div nz-col nzSpan="12">
+        <ng-container>
+          <div class="towColumnLine pointerCursor">
+            <div class="towColumnLine  item1">搜索历史</div>
+            <button class="towColumnLine  item2" (click)="deleteHistory()">
+              <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </button>
+          </div>
+          <hr />
+          <div *ngIf="searchHistory && searchHistory.length > 0">
+            <ng-container *ngFor="let key of searchHistory">
+              <div
+                class="towColumnLine pointerCursor"
+                (click)="searchHistoryClick(key)"
+              >
+                <div class="towColumnLine  item1">{{ key }}</div>
+                <button
+                  class="towColumnLine  item2"
+                  (click)="deleteHistoryByKey(key)"
+                >
+                  x
+                </button>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <!-- 搜索结果部分 -->
+    <div *ngSwitchCase="true">
+      <nz-tabset>
+        <nz-tab nzTitle="单曲">
+          <nz-list
+            [nzDataSource]="searchPageInfos[0].data"
+            [nzRenderItem]="musicitem"
+            [nzLoadMore]="loadMoreMusicTpl"
+          >
+            <ng-template #musicitem let-music>
+              <nz-skeleton
+                class="nothing"
+                [nzAvatar]="true"
+                [nzActive]="true"
+                [nzTitle]="false"
+                [nzLoading]="musicitem.loading"
+              >
+                <div (click)="searchMusicClick(music)" class="height60ListItem">
+                  <div class=" fullHeight windowSmallFont bottomListItem">
+                    <div style="padding-right: 2px">{{ music.name }}</div>
+                    <div *ngIf="music.mvId > 0">
+                      <a
+                        [routerLink]="['/mv', music.mvId]"
+                        class="bottomListItemMv"
+                        >MV</a
+                      >
+                    </div>
+                    <div class="flexLastFull"></div>
+                    <div class="bottomListItemRightPart">
+                      <div nz-row nzGutter="8" class="fullWidth">
+                        <div nz-col nzSpan="9">
+                          <ng-container
+                            *ngFor="
+                              let artist of music.artists;
+                              let idex = index
+                            "
+                          >
+                            <a
+                              *ngIf="idex <= 3"
+                              [routerLink]="['/artist', artist.id]"
+                              class="smallLink"
+                              >{{ artist.name }}&nbsp;</a
+                            >
+                          </ng-container>
+                        </div>
+                        <div nz-col nzSpan="9">
+                          <a
+                            [routerLink]="['/album', music.album.id]"
+                            class="smallLink"
+                            style="width: 150px"
+                            >{{ music.album.name }}</a
+                          >
+                        </div>
+                        <div nz-col nzSpan="4">
+                          {{ music.duration | duration }}
+                        </div>
+                        <div nz-col nzSpan="2"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </nz-skeleton>
+            </ng-template>
+            <ng-template #loadMoreMusicTpl>
+              <div class="loadMoreDiv">
+                <button
+                  nz-button
+                  *ngIf="
+                    !searchPageInfos[0].isLoading && searchPageInfos[0].more
+                  "
+                  (click)="searchPageInfos[0].fetchNextPage()"
+                >
+                  加载更多
+                </button>
+              </div>
+            </ng-template>
+          </nz-list>
+        </nz-tab>
+        <nz-tab nzTitle="歌手">
+          <nz-list
+            [nzDataSource]="searchPageInfos[1].data"
+            [nzRenderItem]="artistsitem"
+            [nzLoadMore]="loadMoreArtistsTpl"
+          >
+            <ng-template #artistsitem let-artist>
+              <div
+                class="nothing height60ListItem pointerCursor"
+                [routerLink]="['/artist', artist.id]"
+              >
+                <div
+                  class=" fullHeight windowSmallFont bottomListItem flexCenterDiv"
+                >
+                  <div style="padding-right: 2px">
+                    <img
+                      [src]="
+                        artist.picUrl
+                          ? artist.picUrl
+                          : '../../assets/Vinyl_music_128px.png'
+                      "
+                      class="img48Px"
+                    />
+                  </div>
+                  <div>{{ artist.name }}</div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #loadMoreArtistsTpl>
+              <div class="loadMoreDiv">
+                <button
+                  nz-button
+                  *ngIf="
+                    !searchPageInfos[1].isLoading && searchPageInfos[1].more
+                  "
+                  (click)="searchPageInfos[1].fetchNextPage()"
+                >
+                  加载更多
+                </button>
+              </div>
+            </ng-template>
+          </nz-list>
+        </nz-tab>
+        <nz-tab nzTitle="专辑">
+          <nz-list
+            [nzDataSource]="searchPageInfos[2].data"
+            [nzRenderItem]="albumsitem"
+            [nzLoadMore]="loadMoreAlbumTpl"
+          >
+            <ng-template #albumsitem let-album>
+              <div
+                class="nothing height60ListItem pointerCursor"
+                [routerLink]="['/album', album.id]"
+              >
+                <div
+                  class=" fullHeight windowSmallFont bottomListItem flexCenterDiv"
+                >
+                  <div style="padding-right: 2px">
+                    <img
+                      [src]="
+                        album.picUrl
+                          ? album.picUrl
+                          : '../../assets/Vinyl_music_128px.png'
+                      "
+                      class="img48Px"
+                    />
+                  </div>
+                  <div class="windowSmallFont">{{ album.name }}</div>
+                  <div class="flexLastFull"></div>
+                  <div
+                    *ngIf="album.artists"
+                    class="windowSmallFont flexCenterDiv"
+                  >
+                    <ng-container *ngFor="let at of album.artists">
+                      <div class="noWrap">{{ at.name }}</div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #loadMoreAlbumTpl>
+              <div class="loadMoreDiv">
+                <button
+                  nz-button
+                  *ngIf="
+                    !searchPageInfos[2].isLoading && searchPageInfos[2].more
+                  "
+                  (click)="searchPageInfos[2].fetchNextPage()"
+                >
+                  加载更多
+                </button>
+              </div>
+            </ng-template>
+          </nz-list>
+        </nz-tab>
+        <nz-tab nzTitle="MV">
+          <nz-list
+            [nzDataSource]="searchPageInfos[3].data"
+            [nzRenderItem]="mvsitem"
+            [nzLoadMore]="loadMoremvTpl"
+            [nzGrid]="{ gutter: 8, xs: 24, sm: 12, md: 6, lg: 6, xl: 4 }"
+            nzSplit="false"
+          >
+            <ng-template #mvsitem let-mv>
+              <nz-list-item [nzContent]="mvcontent">
+                <ng-template #mvcontent>
+                  <nz-card
+                    nzHoverable
+                    [nzCover]="coverTemplate"
+                    [routerLink]="['/mv', mv.id]"
+                  >
+                    <nz-card-meta
+                      [nzTitle]="mv.name"
+                      [nzDescription]="descriptionTemplate"
+                      class="noWrap"
+                    >
+                    </nz-card-meta>
+                    <ng-template #coverTemplate>
+                      <!-- <div class="card-image">
+                                  
+                                </div> -->
+
+                      <div
+                        class="card-back"
+                        [style.background-image]="'url(' + mv.picUrl + ')'"
+                      >
+                        <div class="flexLastFull"></div>
+
+                        <div class="inlineCount">
+                          <i nz-icon [nzIconfont]="'icon-call'"></i>
+                          {{ mv.playCount | countpipe }}
+                        </div>
+                        <div class="inlineDuration">{{ mv.duration }}</div>
+                      </div>
+                    </ng-template>
+                    <ng-template #descriptionTemplate>
+                      <div *ngIf="mv.artists" class="flexCenterDiv">
+                        <div
+                          *ngFor="
+                            let mvArtist of mv.artists;
+                            let mvArtistIndex = index
+                          "
+                        >
+                          <div
+                            class="listItemHor noWrap"
+                            *ngIf="mvArtistIndex <= 3"
+                            style="margin-left: 0;"
+                          >
+                            {{ mvArtist.name }}
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </nz-card>
+                </ng-template>
+              </nz-list-item>
+            </ng-template>
+            <ng-template #loadMoremvTpl>
+              <div class="loadMoreDiv">
+                <button
+                  nz-button
+                  *ngIf="
+                    !searchPageInfos[3].isLoading && searchPageInfos[3].more
+                  "
+                  (click)="searchPageInfos[3].fetchNextPage()"
+                >
+                  加载更多
+                </button>
+              </div>
+            </ng-template>
+          </nz-list>
+        </nz-tab>
+        <nz-tab nzTitle="歌单">
+          <nz-list
+            [nzDataSource]="searchPageInfos[4].data"
+            [nzRenderItem]="playlistitem"
+            [nzLoadMore]="loadMoreplaylistTpl"
+          >
+            <ng-template #playlistitem let-playlist>
+              <div
+                class="nothing height60ListItem"
+                [routerLink]="['/playlistdetail', playlist.id]"
+              >
+                <div class=" fullHeight windowSmallFont bottomListItem">
+                  <div style="padding-right: 2px">
+                    <img
+                      [src]="
+                        playlist.picUrl
+                          ? playlist.picUrl
+                          : '../../assets/Vinyl_music_128px.png'
+                      "
+                      class="img48Px"
+                    />
+                  </div>
+                  <div class="windowSmallFont">{{ playlist.name }}</div>
+                  <div class="flexLastFull"></div>
+                  <div
+                    class="bottomListItemRightPart noWrap windowSmallDescriptionFont"
+                  >
+                    <div nz-row nzGutter="8" class="fullWidth">
+                      <div nz-col nzSpan="9">
+                        <div>{{ playlist.trackCount }}首</div>
+                      </div>
+                      <div nz-col nzSpan="9">
+                        <div>by {{ playlist.createUser.userName }}</div>
+                      </div>
+                      <div nz-col nzSpan="6">
+                        <div>播放量：{{ playlist.playCount | countpipe }}</div>
+                      </div>
+                      <!-- <div nz-col nzSpan="2"></div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #loadMoreplaylistTpl>
+              <div class="loadMoreDiv">
+                <button
+                  nz-button
+                  *ngIf="
+                    !searchPageInfos[4].isLoading && searchPageInfos[4].more
+                  "
+                  (click)="searchPageInfos[4].fetchNextPage()"
+                >
+                  加载更多
+                </button>
+              </div>
+            </ng-template>
+          </nz-list>
+        </nz-tab>
+        <nz-tab nzTitle="主播电台">
+          <nz-list
+            [nzDataSource]="searchPageInfos[5].data"
+            [nzRenderItem]="radiositem"
+            [nzLoadMore]="loadMoreRadioTpl"
+          >
+            <ng-template #radiositem let-radio>
+              <div
+                class="nothing height60ListItem pointerCursor"
+                [routerLink]="['/radio', radio.id]"
+              >
+                <div
+                  class=" fullHeight windowSmallFont bottomListItem flexCenterDiv"
+                >
+                  <div>{{ radio.title }}</div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #loadMoreRadioTpl>
+              <div class="loadMoreDiv">
+                <button
+                  nz-button
+                  *ngIf="
+                    !searchPageInfos[5].isLoading && searchPageInfos[5].more
+                  "
+                  (click)="searchPageInfos[5].fetchNextPage()"
+                >
+                  加载更多
+                </button>
+              </div>
+            </ng-template>
+          </nz-list>
+        </nz-tab>
+        <nz-tab nzTitle="用户">
+          <nz-list
+            [nzDataSource]="searchPageInfos[6].data"
+            [nzRenderItem]="usersitem"
+            [nzLoadMore]="loadMoreUserTpl"
+          >
+            <ng-template #usersitem let-user>
+              <div
+                class="nothing height60ListItem"
+                [routerLink]="['/user', user.id]"
+              >
+                <div class=" fullHeight windowSmallFont bottomListItem">
+                  <div style="padding-right: 2px">
+                    <nz-avatar
+                      [nzSize]="40"
+                      nzIcon="user"
+                      [nzSrc]="
+                        user.userImage
+                          ? user.userImage
+                          : '../../assets/Vinyl_music_128px.png'
+                      "
+                    ></nz-avatar>
+                  </div>
+                  <div class="windowSmallFont">
+                    {{ user.userName }}
+                    <ng-container *ngIf="!user.gender">
+                      <i
+                        nz-icon
+                        nzType="woman"
+                        nzTheme="outline"
+                        style="color: hotpink;"
+                      ></i>
+                    </ng-container>
+                    <ng-container *ngIf="user.gender">
+                      <i
+                        nz-icon
+                        nzType="man"
+                        nzTheme="outline"
+                        style="color: blue;"
+                      ></i>
+                    </ng-container>
+                  </div>
+                  <div class="flexLastFull"></div>
+                  <div class=" windowSmallDescriptionFont">
+                    <div
+                      class="userSignature"
+                      *ngIf="user.signature && user.signature.length > 0"
+                    >
+                      {{ user.signature }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #loadMoreUserTpl>
+              <div class="loadMoreDiv">
+                <button
+                  nz-button
+                  *ngIf="
+                    !searchPageInfos[6].isLoading && searchPageInfos[6].more
+                  "
+                  (click)="searchPageInfos[6].fetchNextPage()"
+                >
+                  加载更多
+                </button>
+              </div>
+            </ng-template>
+          </nz-list>
+        </nz-tab>
+      </nz-tabset>
+    </div>
+  </ng-container>
+</div>

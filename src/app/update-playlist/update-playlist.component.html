@@ -1,0 +1,104 @@
+<div class="rootLayout" *ngIf="playListDetail">
+  <div class="windowSmallFont">编辑歌单信息</div>
+  <nz-divider></nz-divider>
+
+  <div nz-row nzGutter="16" nzType="flex" nzJustify="center" nzAlign="middle">
+    <div nz-col nzSpan="15">
+      <form [formGroup]="validateForm" class="login-form">
+        <label>
+          名称：
+          <nz-input-group style="margin: 5px 0;" [nzSuffix]="suffixTemplate">
+            <input
+              maxlength="20"
+              nz-input
+              placeholder="请输入歌单名称"
+              formControlName="name"
+            />
+            <ng-template #suffixTemplate>
+              <div *ngIf="validateForm.controls['name'].value == null">20</div>
+              <div *ngIf="validateForm.controls['name'].value != null">
+                {{ 20 - validateForm.controls["name"].value.length }}
+              </div>
+            </ng-template>
+          </nz-input-group>
+        </label>
+        <div
+          *ngIf="
+            validateForm.controls['name'].invalid &&
+            (validateForm.controls['name'].dirty ||
+              validateForm.controls['name'].touched)
+          "
+          class="errmsg"
+        >
+          <div *ngIf="validateForm.controls['name'].errors.required">
+            歌单名不能为空！
+          </div>
+          <div *ngIf="validateForm.controls['name'].errors.pattern">
+            歌单名不合法！
+          </div>
+        </div>
+        <br />
+        <label>
+          标签：
+          <div class="flexCenterDiv">
+            <ng-container *ngIf="playListDetail.tags != null">
+              <ng-container *ngFor="let tag of playListDetail.tags">
+                <nz-tag style="margin: 2px;">{{ tag }}</nz-tag>
+              </ng-container>
+            </ng-container>
+            <a
+              href="javascript:"
+              style="text-decoration: underline;"
+              (click)="selectCatVisiable = true"
+              >选择标签</a
+            >
+            <nz-modal
+              [(nzVisible)]="selectCatVisiable"
+              nzTitle="选择标签"
+              (nzOnOk)="selectCatOk()"
+              (nzOnCancel)="selectCatVisiable=false"
+              nzWidth="800"
+            >
+              <div>
+                <app-playlistcategorys [multliSelect]="true" (catSelectChange)="catSelectChange($event)"> 
+                </app-playlistcategorys>
+              </div>
+            </nz-modal>
+          </div>
+        </label>
+        <br />
+        <label
+          >介绍：
+          <textarea rows="5" maxlength="1000" nz-input formControlName="desc">
+          </textarea>
+        </label>
+        <br />
+      </form>
+    </div>
+    <div nz-col nzSpan="9">
+      <div>
+        <img [src]="playListDetail.picUrl" style="height: 220px;" />
+      </div>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <div class="flexCenterDiv">
+    <button
+      nz-button
+      nzType="primary"
+      [disabled]="validateForm.invalid"
+      (click)="submit()"
+      [nzLoading]="submitting"
+    >
+      保存
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      class="marginH10px"
+      [routerLink]="['/home']"
+    >
+      取消
+    </button>
+  </div>
+</div>

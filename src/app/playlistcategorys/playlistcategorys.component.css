@@ -1,0 +1,22 @@
+.categoryBasic {
+  line-height: 40px;
+  border: thin;
+  border-style: groove;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.categoryBasic:hover {
+  background-color: gray;
+}
+
+.categoryChecked {
+  border-color: red;
+}
+.categoryTitle{
+    /* margin-right: 10px;margin-left: 10px; */
+    color: red;width: 60px;
+}
+.categoryHot{
+    color: red;position: absolute;top: -1px;right: 20px;
+}

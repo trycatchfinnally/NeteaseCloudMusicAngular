@@ -1,0 +1,154 @@
+<div [innerHTML]="replaceMessage(aEvent.jsonMessage.msg)"></div>
+<ng-container *ngIf="aEvent.jsonMessage.album != null">
+  <div class="musicPartRoot marginV10px">
+    <div class="flexCenterDiv ">
+      <div
+        class="musicPartLeft marginH10px pointerCursor"
+        (click)="playAlbum(aEvent.jsonMessage.album.id)"
+        [style.background-image]="
+          'url(' + aEvent.jsonMessage.album.picUrl + ')'
+        "
+      >
+        <i nz-icon nzType="play-circle" nzTheme="outline"></i>
+      </div>
+      <div class="musicPartRight">
+        <div>
+          <span class="playListSymbol">专辑</span>
+          <a
+            class="smallLink"
+            style="font-size: 15px;"
+            [routerLink]="['/album', aEvent.jsonMessage.album.id]"
+            >{{ aEvent.jsonMessage.album.name }}</a
+          >
+        </div>
+        <div *ngIf="aEvent.jsonMessage.album.artists != null">
+          <ng-container *ngFor="let art of aEvent.jsonMessage.album.artists">
+            <a [routerLink]="['/artist', art.id]" class="smallLink"
+              >{{ art.name }}&nbsp;</a
+            >
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="aEvent.jsonMessage.music != null">
+  <div class="musicPartRoot marginV10px">
+    <div class="flexCenterDiv ">
+      <div
+        class="musicPartLeft marginH10px pointerCursor"
+        (click)="playMusic(aEvent.jsonMessage.music, 1)"
+        [style.background-image]="
+          'url(' + aEvent.jsonMessage.music.picUrl + ')'
+        "
+      >
+        <i nz-icon nzType="play-circle" nzTheme="outline"></i>
+      </div>
+      <div class="musicPartRight">
+        <a
+          class="smallLink"
+          style="font-size: 15px;"
+          (click)="playMusic(aEvent.jsonMessage.music)"
+          >{{ aEvent.jsonMessage.music.name }}</a
+        >
+        <div *ngIf="aEvent.jsonMessage.music.artists != null">
+          <ng-container *ngFor="let art of aEvent.jsonMessage.music.artists">
+            <a [routerLink]="['/artist', art.id]" class="smallLink"
+              >{{ art.name }}&nbsp;</a
+            >
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<!-- 暂未实现 -->
+<!-- <ng-container *ngIf="aEvent.jsonMessage.mv != null">
+  <div class="musicPartRoot marginV10px">
+    <div class="flexCenterDiv ">
+      <div
+        class="musicPartLeft marginH10px pointerCursor"
+        [routerLink]="['/mv', aEvent.jsonMessage.mv.id]"
+        [style.background-image]="'url(' + aEvent.jsonMessage.mv.picUrl + ')'"
+      >
+        <i nz-icon nzType="play-circle" nzTheme="outline"></i>
+      </div>
+      <div class="musicPartRight">
+        <div>
+          <span class="playListSymbol">MV</span>
+          <a
+            class="smallLink"
+            style="font-size: 15px;"
+            [routerLink]="['/mv', aEvent.jsonMessage.mv.id]"
+            >{{ aEvent.jsonMessage.mv.name }}</a
+          >
+        </div>
+        <div *ngIf="aEvent.jsonMessage.mv.artists != null">
+          <ng-container *ngFor="let art of aEvent.jsonMessage.album.artists">
+            <a [routerLink]="['/artist', art.id]" class="smallLink"
+              >{{ art.name }}&nbsp;</a
+            >
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container> -->
+<ng-container *ngIf="aEvent.jsonMessage.playList != null">
+  <div class="musicPartRoot marginV10px">
+    <div class="flexCenterDiv ">
+      <div
+        class="musicPartLeft marginH10px pointerCursor"
+        (click)="playPlayList(aEvent.jsonMessage.playList.id)"
+        [style.background-image]="
+          'url(' + aEvent.jsonMessage.playList.picUrl + ')'
+        "
+      >
+        <i nz-icon nzType="play-circle" nzTheme="outline"></i>
+      </div>
+      <div class="musicPartRight">
+        <div>
+          <span class="playListSymbol">歌单</span>
+          <a
+            class="smallLink"
+            style="font-size: 15px;"
+            [routerLink]="['/playlistdetail', aEvent.jsonMessage.playList.id]"
+            >{{ aEvent.jsonMessage.playList.name }}</a
+          >
+        </div>
+        <div *ngIf="aEvent.jsonMessage.playList.artists != null">
+          <ng-container *ngFor="let art of aEvent.jsonMessage.playList.artists">
+            <a [routerLink]="['/artist', art.id]" class="smallLink"
+              >{{ art.name }}&nbsp;</a
+            >
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<div *ngIf="aEvent.pics != null">
+  <ng-container *ngFor="let pic of aEvent.pics">
+    <img [src]="pic.originUrl" class="smallImg" />
+  </ng-container>
+</div>
+<ng-content></ng-content>
+<div class="commentRight">
+  <div
+    class="smallLink"
+    (click)="thumbsUpEvent(aEvent)"
+    [class.commentThumbsUp]="aEvent.info.liked"
+  >
+    <i nz-icon nzType="like" nzTheme="outline"></i>
+    <ng-container>({{ aEvent.forwardCount }})</ng-container>
+  </div>
+  <nz-divider nzType="vertical"></nz-divider>
+  <div class="smallLink">转发({{ aEvent.insiteForwardCount }})</div>
+  <nz-divider nzType="vertical"></nz-divider>
+  <div class="smallLink" (click)="replyEvent()">
+    评论({{ aEvent.info.commentCount }})
+  </div>
+</div>
+<div *ngIf="eventCommentVisiable" class="commentRootPanel">
+  <app-comment [commentThreadId]="aEvent.info.threadId"> </app-comment>
+</div>

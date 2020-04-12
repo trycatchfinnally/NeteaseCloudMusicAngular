@@ -1,0 +1,27 @@
+ 
+.loginContent nz-form-item{
+    margin: 0 0 2px 0;
+}
+.loginerrmsg{
+    color: red;
+    float: left;
+    font-size: xx-small
+}
+.loginConfirmButton{
+    background-color: red;
+    width: 100%
+}
+.findPasswordDiv{
+    margin-left: 200px;
+    text-align: left;
+    color: #666;
+    display: inline;
+}
+.findPasswordDiv:hover{
+    text-decoration: underline;
+}
+.otherLoginType{
+    text-align: left;
+    margin-bottom: 5px;
+    margin-top: -15px;
+}

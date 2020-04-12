@@ -1,0 +1,117 @@
+.logo {
+  float: left;
+  width: 176px;
+  height: 70px;
+  background-position: 0 0;
+  font-size: 100%;
+  margin: 0 16px 0 0;
+  padding: 21px 0;
+}
+.logo img {
+  float: left;
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+}
+.logo a {
+  float: left;
+  width: 157px;
+  height: 100%;
+  padding-right: 20px;
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+}
+/* .searchInput{
+    height: 70px;
+    
+}
+
+.topLink{
+    float:left;
+}
+.topLink li {
+    float:left;position: relative;
+  list-style: none;
+  height: 70px;
+  font-size: 14px;
+}
+.topLink a{
+    color:#ccc;text-align: center;
+    text-decoration: none;line-height: 70px;
+    padding: 0 19px;
+}
+a:hover{text-decoration:underline;color:#333;cursor: pointer;}
+.toolbar-external-icons-container{display:-ms-flexbox;display:flex;-ms-flex-direction:row;flex-direction:row;height:100%}
+.toolbar-external-icons-container a{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;margin-left:16px} */
+
+.headerRoot {
+  width: 100%;
+  height: 70px;
+  background: #242424;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+.headerInput {
+  flex-grow: 1;
+}
+.headerLinks {
+  float: right;
+  display: flex;
+  align-items: center;
+}
+.headerLinks a {
+  color: white;
+  margin: 0 0 0 10px;
+}
+.headerLinks a :hover {
+  text-decoration: underline;
+  color: #333;
+  cursor: pointer;
+}
+.headerRegist {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 5px;
+}
+.headerRegistDiv {
+  color: white;
+  margin: 0 0 0 10px;
+  cursor: pointer;
+}
+.loginHeader {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+}
+.loginClosebutton {
+  float: right;
+  color: gray;
+  cursor: pointer;
+}
+.loginClosebutton:hover {
+  color: red;
+}
+
+.loginforget {
+  float: right;
+  margin: 0 0 5px 0;
+}
+.loginUserpart {
+  margin: 0 0 0 10px;
+  cursor: pointer;
+}
+.headerRoot:hover .headerLoginOut {
+  visibility: visible;
+}
+.headerSearchSuggest {
+  position: absolute;
+  top: 60px;
+  background: white;
+  z-index: 1;
+}
+.headerSearchSuggest li:hover {
+  background: #bcbcbd;
+}
+

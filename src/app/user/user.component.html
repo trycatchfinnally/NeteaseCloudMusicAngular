@@ -1,0 +1,148 @@
+<div  class="margin10px">
+  <div class="windowSmallDescriptionFont">个人主页</div>
+  <div *ngIf="userDetail" >
+    <div class="indirectViewTopPart" style="align-items: flex-start;">
+      <img [src]="userDetail.userImage" class="indirectViewTopPartImg">
+      <div class="marginH10px fullWidth">
+        <div class="flexCenterDiv">
+          <div class="windowXXFont">{{userDetail.userName}}</div>
+          <div>
+            <ng-container *ngIf="userDetail.gender==2">
+              <i nz-icon nzType="woman" nzTheme="outline" style="color: hotpink;"></i>
+            </ng-container>
+            <ng-container *ngIf="userDetail.gender==1">
+              <i nz-icon nzType="man" nzTheme="outline" style="color: blue;"></i>
+            </ng-container>
+          </div>
+          <div *ngIf="userDetail.vipLevel" class="vipLevelDiv marginH10px">
+            {{userDetail.vipLevel}}
+          </div>
+        </div>
+       <div>
+          <div class="flexCenterDiv topControlDiv">
+              <div class="topPartControl" (click)="topPartControlClick(0)"> <i nz-icon nzType="message"
+                  nzTheme="outline"></i>发私信</div>
+              <div class="topPartControl" (click)="topPartControlClick(1)"><i nz-icon nzType="folder-add"
+                  nzTheme="outline"></i>关注</div>
+              <nz-dropdown [nzPlacement]="'bottomLeft'"><button nz-button nz-dropdown class="topPartControl">...更多</button>
+                <ul nz-menu>
+                  <li nz-menu-item (click)="topPartControlClick(2)">加入黑名单</li>
+                  <li nz-menu-item (click)="topPartControlClick(3)">举报</li>
+    
+                </ul>
+    
+              </nz-dropdown>
+    
+    
+            </div>
+       </div>
+        <nz-divider></nz-divider>
+
+        <div class="flexCenterDiv windowSmallDescriptionFont">
+          <div class="pointerCursor">
+            <div class="userCountAlign">{{userDetail.eventCount}}</div>
+            <div>动态</div>
+          </div>
+          <nz-divider nzType="vertical"></nz-divider>
+          <div class="pointerCursor">
+            <div  class="userCountAlign">{{userDetail.follows}}</div>
+            <div>关注</div>
+          </div>
+          <nz-divider nzType="vertical"></nz-divider>
+          <div class="pointerCursor">
+            <div  class="userCountAlign">{{userDetail.followeds}}</div>
+            <div>粉丝</div>
+          </div>
+        </div>
+        <div class="flexTopDiv marginV10px">
+          <div class="windowSmallDescriptionFontHeader">个人介绍：</div>
+          <div class="windowSmallDescriptionFont multiLineOverflowWrap">{{userDetail.detailDescription}}</div>
+        </div>
+        <div class="flexCenterDiv">
+            <div class="windowSmallDescriptionFontHeader">所在地区：</div>
+            <div class="windowSmallDescriptionFont">{{userDetail.province}}&nbsp;&nbsp;{{userDetail.city}}</div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="userPlaylists"  >
+<div class="windowSmallDescriptionFont marginto10px">创建的歌单</div>
+<nz-divider></nz-divider>
+<nz-list [nzDataSource]="userCreatePlaylists" [nzRenderItem]="userplaylistItem"
+[nzGrid]="{ gutter: 8, xs: 24, sm: 12, md: 6, lg: 6, xl: 4 }" nzSplit="false"  >
+<ng-template #userplaylistItem let-userplaylist>
+  <nz-list-item [nzContent]="userplaylistcontent">
+    <ng-template #userplaylistcontent>
+      <nz-card nzHoverable [nzCover]="coverTemplate"  [routerLink]="[ '/playlistdetail',userplaylist.id ]">
+        <nz-card-meta [nzTitle]="userplaylist.name" class="noWrap" [nzDescription]="userplaylist.trackCount+'首'">
+        </nz-card-meta>
+        <ng-template #coverTemplate>
+          <!-- <div class="card-image">
+                    
+                  </div> -->
+
+          <div class="card-back" [style.background-image]="'url(' + userplaylist.picUrl + ')'">
+
+
+            <div class="flexLastFull"></div>
+
+
+            <!-- <div class="inlineDuration">{{album.name}}</div> -->
+
+          </div>
+
+
+
+        </ng-template>
+
+
+      </nz-card>
+    </ng-template>
+  </nz-list-item>
+
+</ng-template>
+ 
+</nz-list>
+<div class="windowSmallDescriptionFont marginto10px">收藏的歌单</div>
+<nz-divider></nz-divider>
+<nz-list [nzDataSource]="userCollectionPlaylists" [nzRenderItem]="userCollectionplaylistItem"
+[nzGrid]="{ gutter: 8, xs: 24, sm: 12, md: 6, lg: 6, xl: 4 }" nzSplit="false" [nzLoadMore]="loadMorePlaylistTpl">
+<ng-template #userCollectionplaylistItem let-userCollectionplaylist>
+  <nz-list-item [nzContent]="userCollectionplaylistcontent">
+    <ng-template #userCollectionplaylistcontent>
+      <nz-card nzHoverable [nzCover]="coverCollectionTemplate"  [routerLink]="[ '/playlistdetail',userCollectionplaylist.id ]">
+        <nz-card-meta [nzTitle]="userCollectionplaylist.name" class="noWrap" [nzDescription]="userCollectionplaylist.trackCount+'首'">
+        </nz-card-meta>
+        <ng-template #coverCollectionTemplate>
+          <!-- <div class="card-image">
+                    
+                  </div> -->
+
+          <div class="card-back" [style.background-image]="'url(' + userCollectionplaylist.picUrl + ')'">
+
+
+            <div class="flexLastFull"></div>
+
+
+            <!-- <div class="inlineDuration">{{album.name}}</div> -->
+
+          </div>
+
+
+
+        </ng-template>
+
+
+      </nz-card>
+    </ng-template>
+  </nz-list-item>
+
+</ng-template>
+<ng-template #loadMorePlaylistTpl>
+  <div class="loadMoreDiv">
+    <button nz-button *ngIf="!userPlaylists.isLoading&&userPlaylists.more" (click)="userPlaylists.fetchNextPage()">加载更多</button>
+  </div>
+</ng-template>
+</nz-list>
+  </div>
+</div>

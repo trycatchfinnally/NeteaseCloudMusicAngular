@@ -1,0 +1,129 @@
+<div class="margin10px">
+  <div class="flexCenterDiv description">
+    <div>语种：</div>
+    <div class="smallLink" [class.selectedCat]="selectedLang==99" (click)="langClick(99)">全部</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectedLang==10" (click)="langClick(10)">华语</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectedLang==20" (click)="langClick(20)">欧美</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectedLang==70" (click)="langClick(70)">日本</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectedLang==60" (click)="langClick(60)">韩国</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectedLang==40" (click)="langClick(40)">其他</div>
+  </div>
+  <div class="flexCenterDiv description">
+    <div>分类：</div>
+    <div class="smallLink" [class.selectedCat]="selectedCat==99" (click)="catClick(99)">全部</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectedCat==1" (click)="catClick(1)">男歌手</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectedCat==2" (click)="catClick(2)">女歌手</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectedCat==3" (click)="catClick(3)">乐队组合</div>
+  </div>
+  <div class="flexCenterDiv description">
+    <div>筛选：</div>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='99'" (click)="pinYinClick('99')">热门</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='A'" (click)="pinYinClick('A')">A</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='B'" (click)="pinYinClick('B')">B</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='C'" (click)="pinYinClick('C')">C</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='D'" (click)="pinYinClick('D')">D</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='E'" (click)="pinYinClick('E')">E</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='F'" (click)="pinYinClick('F')">F</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='G'" (click)="pinYinClick('G')">G</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='H'" (click)="pinYinClick('B')">H</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='I'" (click)="pinYinClick('I')">I</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='J'" (click)="pinYinClick('J')">J</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='K'" (click)="pinYinClick('K')">K</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='L'" (click)="pinYinClick('L')">L</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='M'" (click)="pinYinClick('M')">M</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='N'" (click)="pinYinClick('N')">N</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='O'" (click)="pinYinClick('O')">O</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='P'" (click)="pinYinClick('P')">P</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='Q'" (click)="pinYinClick('Q')">Q</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='R'" (click)="pinYinClick('R')">R</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='S'" (click)="pinYinClick('S')">S</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='T'" (click)="pinYinClick('T')">T</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='U'" (click)="pinYinClick('U')">U</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='V'" (click)="pinYinClick('V')">V</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='W'" (click)="pinYinClick('W')">W</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='X'" (click)="pinYinClick('X')">X</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='Y'" (click)="pinYinClick('Y')">Y</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='Z'" (click)="pinYinClick('Z')">Z</div>
+    <nz-divider nzType="vertical"></nz-divider>
+    <div class="smallLink" [class.selectedCat]="selectPinYin=='#'" (click)="pinYinClick('#')">#</div>
+  </div>
+ <nz-spin [nzTip]="'加载中...'" [nzSpinning]="artistsPages.isLoading" nzSize="large">
+  <nz-list [nzDataSource]="artistsPages.data" [nzRenderItem]="artistitem" [nzLoadMore]="loadMoreAlbumTpl"
+  [nzGrid]="{ gutter: 8, xs: 24, sm: 12, md: 6, lg: 6, xl: 4 }" nzSplit="false">
+  <ng-template #artistitem let-artist>
+    <nz-list-item [nzContent]="artistcontent">
+      <ng-template #artistcontent>
+        <nz-card nzHoverable [nzCover]="coverTemplate" [routerLink]="[ '/artist',artist.id]">
+          <nz-card-meta [nzTitle]="artist.name" class="noWrap">
+          </nz-card-meta>
+          <ng-template #coverTemplate>
+            <!-- <div class="card-image">
+                    
+                  </div> -->
+
+            <div class="card-back" [style.background-image]="'url(' + artist.picUrl + ')'">
+
+
+              <div class="flexLastFull"></div>
+
+
+              <!-- <div class="inlineDuration">{{album.name}}</div> -->
+
+            </div>
+
+
+
+          </ng-template>
+
+
+        </nz-card>
+      </ng-template>
+
+    </nz-list-item>
+
+  </ng-template>
+  <ng-template #loadMoreAlbumTpl>
+    <div class="loadMoreDiv">
+      <button nz-button *ngIf="!artistsPages.isLoading&&artistsPages.more"
+        (click)="artistsPages.fetchNextPage()">加载更多</button>
+    </div>
+  </ng-template>
+</nz-list>
+
+ </nz-spin>
+ 
+</div>

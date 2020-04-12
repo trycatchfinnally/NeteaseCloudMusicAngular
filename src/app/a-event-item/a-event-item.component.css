@@ -1,0 +1,54 @@
+.playListSymbol{
+  color: #e03f40;
+  margin:0 6px 0 0;
+  border-style: groove;
+  border-width: thin;
+  font-size: 10px;
+  border-color:  #e03f40;
+  padding: 1px;
+}
+.musicPartRoot {
+  height: 60px;
+  background: #fff;
+  padding: 10px 0;
+}
+.musicPartLeft{
+  background-size: 100% 100%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  text-align: center;
+  line-height: 40px;
+  opacity: 0.8;
+  color: #fff;
+}
+.musicPartLeft:hover{opacity: 1;}
+.musicPartRight{
+ color: #333;
+}
+.musicPartRight a:hover{
+  text-decoration: underline;
+}
+.commentRootPanel{
+  margin-top: 30px;
+}
+.commentRight {
+  float: right;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+.commentThumbsUp {
+  color: red;
+}
+.musicPartRoot {
+  height: 60px;
+  background: #fff;
+  padding: 10px 0;
+}
+.smallImg{
+  width: 30%;
+  height: 30%;
+  margin: 10px 10px 10px 0;
+}

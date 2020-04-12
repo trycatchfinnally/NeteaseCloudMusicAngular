@@ -1,0 +1,174 @@
+<div>
+  <div style="margin: 0 20px">
+    <div nz-row nzGutter="8">
+      <nz-spin [nzTip]="'评论正在加载中...'" [nzSpinning]="!commentCollection">
+        <div nz-col nzSpan="24" *ngIf="commentCollection">
+          <div class="descriptHeader">
+            评论（{{ commentCollection.total }}）
+          </div>
+          <nz-divider></nz-divider>
+          <div (click)="addCommentClick()" class="pointerCursor">
+            <textarea
+              rows="1"
+              nz-input
+              placeholder="发表评论"
+              [disabled]="true"
+              class="pointerCursor"
+            ></textarea>
+          </div>
+          <div class="descriptHeader">精彩评论</div>
+          <hr />
+          <hr />
+          <nz-list
+            [nzDataSource]="commentCollection.hotComments"
+            [nzRenderItem]="hotCommentItem"
+          >
+            <ng-template #hotCommentItem let-hotComment>
+              <div>
+                <nz-divider></nz-divider>
+                <div class="flexTopDiv">
+                  <nz-avatar
+                    [nzSrc]="hotComment.user.userImage"
+                    nzIcon="user"
+                    nzSize="default"
+                  ></nz-avatar>
+                  <div class="windowSmallFont flexLastFull">
+                    <div class="flexTopDiv">
+                      <a
+                        class="userNameLink"
+                        [routerLink]="['/user', hotComment.user.userId]"
+                        >{{ hotComment.user.userName }}</a
+                      >
+                      <div class="wrap">: {{ hotComment.content }}</div>
+                    </div>
+                    <div class="flexCenterDiv commentDateAndControl">
+                      <div class="windowSmallDescriptionFont">
+                        {{ hotComment.time | date: "yyyy-MM-dd" }}
+                      </div>
+                      <div class="commentRight">
+                        <div
+                          class="smallLink"
+                          (click)="thumbsUpComment(hotComment)"
+                          [class.commentThumbsUp]="hotComment.liked"
+                        >
+                          <i nz-icon nzType="like" nzTheme="outline"></i>
+                          <ng-container *ngIf="hotComment.likedCount > 0"
+                            >({{ hotComment.likedCount }})</ng-container
+                          >
+                        </div>
+                        <nz-divider nzType="vertical"></nz-divider>
+                        <div class="smallLink">分享</div>
+                        <nz-divider nzType="vertical"></nz-divider>
+                        <div
+                          class="smallLink"
+                          (click)="replyCommentClick(hotComment)"
+                        >
+                          回复
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <nz-divider></nz-divider>
+              </div>
+            </ng-template>
+          </nz-list>
+          <nz-divider></nz-divider>
+          <div class="descriptHeader">最新评论</div>
+          <hr />
+          <hr />
+          <nz-list
+            [nzDataSource]="commentCollection.comments"
+            [nzRenderItem]="topCommentItem"
+          >
+            <ng-template #topCommentItem let-topComment>
+              <div>
+                <nz-divider></nz-divider>
+                <div class="flexTopDiv">
+                  <nz-avatar
+                    [nzSrc]="topComment.user.userImage"
+                    nzIcon="user"
+                  ></nz-avatar>
+                  <div class="windowSmallFont flexLastFull">
+                    <!-- 上面评论部分 -->
+                    <div class="flexTopDiv">
+                      <a
+                        class="userNameLink"
+                        [routerLink]="['/user', topComment.user.userId]"
+                        >{{ topComment.user.userName }}</a
+                      >
+                      <div class="flexTopDiv">
+                        <div *ngIf="topComment.hasReplied">
+                          :回复<a
+                            class="userNameLink"
+                            [routerLink]="[
+                              '/user',
+                              topComment.beReplied[0].user.userId
+                            ]"
+                            >@{{ topComment.beReplied[0].user.userName }}</a
+                          >
+                        </div>
+                        <div class="wrap">:{{ topComment.content }}</div>
+                      </div>
+                    </div>
+                    <div
+                      class="flexTopDiv commentCenterReplied"
+                      *ngIf="topComment.hasReplied"
+                    >
+                      <a
+                        class="userNameLink"
+                        [routerLink]="[
+                          '/user',
+                          topComment.beReplied[0].user.userId
+                        ]"
+                        >@{{ topComment.beReplied[0].user.userName }}
+                      </a>
+                      <div class="wrap">
+                        :{{ topComment.beReplied[0].content }}
+                      </div>
+                    </div>
+                    <div class="flexCenterDiv commentDateAndControl">
+                      <div class="windowSmallDescriptionFont">
+                        {{ topComment.time | date: "yyyy-MM-dd" }}
+                      </div>
+                      <div class="commentRight">
+                        <div
+                          class="smallLink"
+                          (click)="thumbsUpComment(topComment)"
+                          [class.commentThumbsUp]="topComment.liked"
+                        >
+                          <i nz-icon nzType="like" nzTheme="outline"></i>
+                          <ng-container *ngIf="topComment.likedCount > 0"
+                            >({{ topComment.likedCount }})</ng-container
+                          >
+                        </div>
+                        <nz-divider nzType="vertical"></nz-divider>
+                        <div class="smallLink">分享</div>
+                        <nz-divider nzType="vertical"></nz-divider>
+                        <div
+                          class="smallLink"
+                          (click)="replyCommentClick(topComment)"
+                        >
+                          回复
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <nz-divider></nz-divider>
+              </div>
+            </ng-template>
+          </nz-list>
+          <nz-pagination
+            [nzPageIndex]="pageOffset"
+            (nzPageIndexChange)="changePage($event)"
+            (nzPageSizeChange)="changePageSize($event)"
+            [nzTotal]="commentCollection.total"
+            nzShowSizeChanger
+            [nzPageSize]="limit"
+          ></nz-pagination>
+        </div>
+      </nz-spin>
+    </div>
+  </div>
+</div>

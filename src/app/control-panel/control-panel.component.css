@@ -1,0 +1,61 @@
+.trackName{
+    color: antiquewhite;
+    margin: 10px 0 0 10px;
+    height:5px;
+}
+.trackImg{
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+}
+.nextTrackButton{
+    display: block;
+    text-align: center;
+    margin: 0 10px;
+    color: brown;
+}
+.playTrackButton{
+    text-align: center;
+    display: block;
+    font-size: x-large;
+    color: brown;
+
+}
+.trackVloumnDiv{
+    color: gray;
+    font-size: larger;
+    margin: 0 3px 0 10px;
+    cursor: pointer;
+
+}
+.trackVloumnDiv:hover{
+    color: white
+}
+.popoverTitleLink{
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+    color: #838383;
+    cursor: pointer;
+}
+.popoverTitleLink:hover{
+    color: brown;
+}
+.popoverContentRoot{
+    width: 400px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+#lstPlayLst .popoverContentRoot:nth-of-type(even){
+    background: #dcdcdc
+}
+#lstPlayLst .popoverContentRoot:nth-of-type(odd){
+    background: transparent
+}
+#lstPlayLst .popoverContentRoot:hover{
+    background: #bcbcbd
+
+}

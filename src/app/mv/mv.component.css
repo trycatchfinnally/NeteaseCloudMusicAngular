@@ -1,0 +1,41 @@
+.mvNameDiv{
+    font-size: 1.25em;
+    font-family: monospace;
+    font-weight: bold;
+    margin: 0 10px;
+}
+.rightPlayCount{position: absolute;right: 30px;}
+.mvDivRoot{
+height: 500px;
+ 
+background-color:#000;
+}
+.mvControlPart
+{
+    height: 30px;
+    position: relative;
+    bottom: 5px;
+    background: #2e3033;
+}
+ 
+.mvDesciptionHeader{height: 1px;}
+.card-back{
+    background-size: cover;
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+}
+.inlineCount{
+    position: relative;
+    background: linear-gradient(left,rgba(255, 255, 255, 0.062),rgba(0,0,0,0.6));
+    height: 20px;
+    right:  5px;
+    width: auto;
+    color: #fff;
+    font-size: small
+    
+}
+ .simiMvList ::ng-deep .ant-list-item-content {
+     width: 100%;
+ }
+ 

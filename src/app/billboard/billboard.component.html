@@ -1,0 +1,59 @@
+<div class="margin10px">
+  <div class="windowSmallDescriptionFont marginV10px">排行榜</div>
+  <div class="windowSmallFont">官方榜</div>
+  <nz-divider></nz-divider>
+<nz-list [nzDataSource]="officialBillBoards" [nzRenderItem]="officialbillBoardItem"  [nzGrid]="{gutter:8,span:12}">
+  <ng-template #officialbillBoardItem let-officialbillBoard>
+    <nz-list-item [routerLink]="officialbillBoard.id==0?['/billboard/topArtist']:['/playlistdetail',officialbillBoard.id]" >
+     <div class="flexCenterDiv officialTopListItem pointerCursor">
+       <img [src]="officialbillBoard.picUrl"   >
+       <div class="officialTopListUpdateFrequencyDiv">{{officialbillBoard.updateFrequency }}</div>
+       <div class="marginH10px windowSmallFont">
+         <ng-container *ngFor="let trackName of officialbillBoard.someTracksName">
+<div>{{trackName}}</div>
+         </ng-container>
+         
+       </div>
+     </div>
+    </nz-list-item>
+  </ng-template>
+</nz-list>
+<div class="windowSmallFont">全球榜</div>
+  <nz-divider></nz-divider>
+<nz-list [nzDataSource]="globalBillBoards" [nzRenderItem]="globalbillBoardItem"  [nzGrid]="{ gutter: 8, xs: 24, sm: 12, md: 6, lg: 6, xl: 4 }" nzSplit="false">
+  <ng-template #globalbillBoardItem let-globalbillBoard>
+    <nz-list-item [nzContent]="globalbillBoardcontent"> 
+      
+         <ng-template #globalbillBoardcontent>
+          <nz-card nzHoverable [nzCover]="globalbillBoardCoverTemplate"   [routerLink]="['/playlistdetail',globalbillBoard.id]" >
+            <nz-card-meta [nzTitle]="globalbillBoard.name" class="noWrap">
+            </nz-card-meta>
+            <ng-template #globalbillBoardCoverTemplate>
+              <!-- <div class="card-image">
+                        
+                      </div> -->
+
+              <div class="card-back" [style.background-image]="'url(' + globalbillBoard.picUrl + ')'">
+
+
+                <div class="fullWidth  fullHeight updateFrequencyDiv">{{globalbillBoard.updateFrequency }}</div>
+
+               
+                <!-- <div class="inlineDuration">{{album.name}}</div> -->
+
+              </div>
+
+
+
+            </ng-template>
+
+
+          </nz-card>
+
+         </ng-template>
+         
+       
+    </nz-list-item>
+  </ng-template>
+</nz-list>
+</div>

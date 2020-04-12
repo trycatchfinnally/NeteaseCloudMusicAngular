@@ -1,0 +1,156 @@
+<div class="margin10px">
+  <form
+    nz-form
+    [formGroup]="validateForm"
+    *ngIf="validateForm != null"
+    (ngSubmit)="submit()"
+  >
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" nzRequired [nzXs]="24" nzFor="nickname">
+        <span>
+          用户昵称
+          <i
+            nz-icon
+            nz-tooltip
+            nzTitle="显示的用户名"
+            nzType="question-circle"
+            nzTheme="outline"
+          ></i>
+        </span>
+      </nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-input-group>
+          <input nz-input id="nickname" formControlName="nickname" />
+        </nz-input-group>
+
+        <nz-form-explain
+          *ngIf="
+            validateForm.get('nickname') != null &&
+            validateForm.get('nickname').dirty &&
+            validateForm.get('nickname').errors &&
+            validateForm.get('nickname').errors.required
+          "
+          >请输入你的用户昵称!</nz-form-explain
+        >
+        <nz-form-explain
+          *ngIf="
+            validateForm.get('nickname') != null &&
+            validateForm.get('nickname').dirty &&
+            validateForm.get('nickname').errors &&
+            validateForm.get('nickname').errors.maxlength
+          "
+          >用户昵称过长!</nz-form-explain
+        >
+        <nz-form-explain
+          *ngIf="
+            validateForm.get('nickname') != null &&
+            validateForm.get('nickname').dirty &&
+            validateForm.get('nickname').errors&&validateForm.get('nickname').errors.pattern
+          "
+          >用户名不能包含空格</nz-form-explain
+        >
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" nzRequired [nzXs]="24" nzFor="birthday"
+        >出生日期</nz-form-label
+      >
+      <nz-form-control [nzSm]="16" [nzXs]="24">
+        <nz-date-picker
+          formControlName="birthday"
+          id="birthday"
+        ></nz-date-picker>
+        <nz-form-explain
+          *ngIf="
+            validateForm.get('birthday') != null &&
+            validateForm.get('birthday').dirty &&
+            validateForm.get('birthday').errors
+          "
+          >请选择出生日期!</nz-form-explain
+        >
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nzFlex="true">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="gender" nzRequired
+        >性别</nz-form-label
+      >
+      <nz-form-control
+        [nzSm]="14"
+        [nzXs]="24"
+        [nzValidateStatus]="validateForm.controls['gender']"
+      >
+        <nz-radio-group id="gender" formControlName="gender">
+          <label nz-radio nzValue="0">保密</label>
+          <label nz-radio nzValue="1">男</label>
+          <label nz-radio nzValue="2">女</label>
+        </nz-radio-group>
+        <nz-form-explain
+          *ngIf="
+            validateForm.get('gender') != null &&
+            validateForm.get('gender').dirty &&
+            validateForm.get('gender').errors 
+          "
+          >请选择性别!</nz-form-explain
+        >
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="region" nzRequired
+        >所在地区</nz-form-label
+      >
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请选择你所在的地区">
+        <nz-cascader
+          id="region"
+          formControlName="region"
+          [nzOptions]="proviceAndCitys"
+        >
+        </nz-cascader>
+        <nz-form-explain
+          *ngIf="
+            validateForm.get('region') != null &&
+            validateForm.get('region').dirty &&
+            validateForm.get('region').errors
+          "
+          >请选择地区!</nz-form-explain
+        >
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="signature"
+        >个性签名</nz-form-label
+      >
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <textarea
+          rows="4"
+          nz-input
+          id="signature"
+          formControlName="signature"
+        ></textarea>
+        <nz-form-explain
+          *ngIf="
+            validateForm.get('signature') != null &&
+            validateForm.get('signature').dirty &&
+            validateForm.get('signature').errors
+          "
+          >输入内容过长!</nz-form-explain
+        >
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item  class="commitPart">
+      <nz-form-control>
+        <button
+          nz-button
+          nzSize="large"
+          [nzType]="'primary'"
+          [nzLoading]="changeProgressing"
+          [disabled]="validateForm.invalid"
+          type="submit"
+          style="width: 300px;"
+        >
+          提交
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

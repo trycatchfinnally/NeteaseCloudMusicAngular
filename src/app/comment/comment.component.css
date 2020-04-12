@@ -1,0 +1,56 @@
+.descriptHeader{
+    text-align: center;
+    float: left;
+    font-size: 16px
+}
+ .userNameLink{white-space: nowrap;}
+.wrap {
+    /* height: 40px; */
+    line-height: 20px;
+    overflow: hidden;
+  }
+  .wrap .text {
+    float: right;
+    margin-left: -5px;
+    width: 100%;
+    word-break: break-all;
+    font-family: monospace;
+    font-size: small
+  }
+  .wrap::before {
+    float: left;
+    width: 5px;
+    content: '';
+    height: 40px;
+  }
+  .wrap::after {
+    float: right;
+    content: "...";
+    height: 20px;
+    line-height: 20px;
+    /* 为三个省略号的宽度 */
+    width: 3em;
+    /* 使盒子不占位置 */
+    margin-left: -3em;
+    /* 移动省略号位置 */
+    position: relative;
+    left: 100%;
+    top: -20px;
+    padding-right: 5px;
+  }
+  .commentDateAndControl{
+    margin: 5px 10px
+  }
+  .commentRight{
+    float: right;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: flex-end
+  }
+  .commentCenterReplied{
+    background: darkgray;
+  }
+  .commentThumbsUp{
+    color: red;
+  }

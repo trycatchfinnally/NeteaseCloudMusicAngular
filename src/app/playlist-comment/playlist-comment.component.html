@@ -1,0 +1,16 @@
+<div>
+  <div class="marginLeft20px">
+    <div class="marginV10px headerDiv" >评论({{commentCount}})</div>
+    <div class="flexCenterDiv marginV10px">
+      <img [src]="picUrl" class="playListImg">
+      <div class="indirectViewTopPartRight">
+        <div class="windowXXFont ">{{playListName}}</div>
+        <div class="flexCenterDiv marginV10px">
+          <div class="userByDiv">by&nbsp;&nbsp;</div>
+          <a class="smallLink" [routerLink]="[ '/user',userId ]">{{userName}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-comment [commentThreadId]="commentThreadId" *ngIf="commentThreadId"></app-comment>
+</div>

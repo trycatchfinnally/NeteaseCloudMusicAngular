@@ -1,0 +1,57 @@
+ .topPartUserInfo{
+     display: flex;
+     align-items: center
+ }
+ 
+ .topPartControl{
+     font-size: 15px;
+     border: solid;
+     border-width: thin;
+     border-style: solid;
+     padding: 3px;
+     margin: 5px;
+     cursor: pointer;
+ }
+ .topPartControl:hover{
+     background: #bcbcbc
+ }
+ .topTagDiv{
+     cursor: pointer;
+     color: blue;
+      margin: 0 5px 0 0
+ }
+ .topDescriptionDiv{
+    display: flex;
+    /* background-color:cornflowerblue; */
+   
+     
+ }
+ .topDescription{
+    overflow: hidden;
+    text-overflow:ellipsis; 
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    width:100%;
+ }
+ .centerControlPart{
+    display: flex;
+    height: 30px;
+   align-items: center;
+   margin-left: 20px;
+}
+.ceterSelectModePart{
+    color: blue;
+    cursor: pointer;
+}
+
+#lstMain .nothing:nth-of-type(even){
+    background: #dcdcdc
+}
+#lstMain .nothing:nth-of-type(odd){
+    background: transparent
+}
+#lstMain .nothing:hover{
+    background: #bcbcbd
+
+}

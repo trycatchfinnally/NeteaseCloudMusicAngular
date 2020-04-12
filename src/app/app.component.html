@@ -1,0 +1,304 @@
+<div class="mainPage">
+  <app-header>
+    <div
+      (click)="drawerbuttonClick()"
+      title="更多"
+      class="margin10px pointerCursor hamburgIcon"
+    >
+      <i nz-icon nzType="menu" nzTheme="outline"></i>
+    </div>
+  </app-header>
+  <nz-drawer
+    [nzVisible]="drawervisible"
+    nzPlacement="left"
+    nzClosable="false"
+    (nzOnClose)="closedrawer()"
+  >
+    <nz-list nzItemLayout="horizontal" nzSplit="false">
+      <nz-list-item>
+        <a [routerLink]="['/search']">
+          <i nz-icon nzType="search" nzTheme="outline"></i>
+          搜索
+        </a>
+      </nz-list-item>
+      <nz-list-item>
+        <a routerLink="/search">
+          <i nz-icon nzType="search" nzTheme="outline"></i>
+          发现音乐
+        </a>
+      </nz-list-item>
+      <nz-list-item>
+        <a [routerLink]="['/playList']">
+          <i nz-icon nzType="search" nzTheme="outline"></i>
+          歌单
+        </a>
+      </nz-list-item>
+      <nz-list-item>
+        <a [routerLink]="['/artists']">
+          <i nz-icon nzType="usergroup-delete" nzTheme="outline"></i>
+          所有歌手
+        </a>
+      </nz-list-item>
+    </nz-list>
+    <br />
+    <br />
+    <div class="windowSmallDescriptionFont">我的音乐</div>
+    <br />
+    <nz-list nzSplit="false">
+      <nz-list-item>
+        <a
+          href="https://miy40pp.kuaizhan.com/#/jump?inviteCode=R3ZZWN&osType=1"
+          target="_blank"
+        >
+          <i nz-icon nzType="upload" nzTheme="outline"></i>
+          领券购物
+        </a>
+      </nz-list-item>
+      <nz-list-item>
+        <a [routerLink]="['/events']">
+          <i nz-icon nzType="team" nzTheme="outline"></i>
+          我的动态
+        </a>
+      </nz-list-item>
+      <nz-list-item>
+        <a routerLink="/search">
+          <i nz-icon nzType="history" nzTheme="outline"></i>
+          最近播放
+        </a>
+      </nz-list-item>
+      <nz-list-item>
+        <a [routerLink]="['/userCloudDisk']">
+          <i nz-icon nzType="cloud" nzTheme="outline"></i>
+          我的音乐云盘
+        </a>
+      </nz-list-item>
+      <nz-list-item>
+        <a routerLink="/search">
+          <i nz-icon nzType="cloud" nzTheme="outline"></i>
+          我的电台
+        </a>
+      </nz-list-item>
+      <nz-list-item>
+        <a routerLink="/search">
+          <i nz-icon nzType="file-add" nzTheme="outline"></i>
+          我的收藏
+        </a>
+      </nz-list-item>
+    </nz-list>
+    <br />
+    <br />
+    <ng-container *ngIf="loginServerice.IsLoginIn">
+      <div class="createPlaylistDiv">
+        <div
+          class="rightAddPlaylist pointerCursor"
+          (click)="createPlaylistVisible = !createPlaylistVisible"
+        >
+          <i nz-icon nzType="plus-circle" nzTheme="outline"></i>
+        </div>
+        <div class="fullWidth windowSmallDescriptionFont">创建的歌单</div>
+        <nz-modal
+          [(nzVisible)]="createPlaylistVisible"
+          [nzClosable]="false"
+          nzTitle="新建歌单"
+          [nzFooter]="null"
+          nzWrapClassName="vertical-center-modal"
+          nzWidth="350"
+          [nzContent]="createPlaylistContent"
+          (nzOnOk)="createPlaylisthandleOk()"
+        >
+          <ng-template #createPlaylistContent>
+            <div>
+              <nz-input-group [nzSuffix]="canInputLength">
+                <input
+                  name="createPlaylist"
+                  class="form-control"
+                  nz-input
+                  placeholder="歌单标题"
+                  [(ngModel)]="createPlaylistName"
+                  required
+                  maxlength="18"
+                  #createPlaylist="ngModel"
+                />
+              </nz-input-group>
+              <ng-template #canInputLength>
+                <div>{{ 18 - createPlaylistName.length }}</div>
+              </ng-template>
+
+              <div
+                *ngIf="
+                  createPlaylist.invalid &&
+                  (createPlaylist.dirty || createPlaylist.touched)
+                "
+                class="loginerrmsg"
+              >
+                <div *ngIf="createPlaylist.errors.required">
+                  请输入歌单标题
+                </div>
+                <div *ngIf="createPlaylist.errors.maxlength">
+                  歌单标题长度不能超过20
+                </div>
+              </div>
+              <div class="loginerrmsg" *ngIf="isSubmitWithError">
+                创建歌单发生错误，请重试！
+              </div>
+              <br /><br />
+
+              <label nz-checkbox [(ngModel)]="isPrivatePlaylist"
+                >设置为隐私歌单</label
+              >
+              <div class="fullWidth">
+                <div class="createPlaylistButton">
+                  <button
+                    nz-button
+                    class="login-form-button loginConfirmButton marginH10px"
+                    nzSize="large"
+                    [nzType]="'primary'"
+                    (click)="createPlaylistVisible = false"
+                  >
+                    取消
+                  </button>
+                  <button
+                    nz-button
+                    class="login-form-button loginConfirmButton"
+                    nzSize="large"
+                    [nzType]="'primary'"
+                    [disabled]="
+                      !createPlaylistName || createPlaylistName.length == 0
+                    "
+                    [nzLoading]="isSubmitting"
+                    (click)="createPlaylisthandleOk()"
+                  >
+                    新建
+                  </button>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </nz-modal>
+      </div>
+      <br />
+
+      <nz-list
+        nzSplit="false"
+        [nzDataSource]="userCreatedPlaylist"
+        [nzRenderItem]="userCreatedPlaylistItem"
+      >
+        <ng-template #userCreatedPlaylistItem let-playlist>
+          <nz-list-item>
+            <div (contextmenu)="contextMenu($event, template)">
+              <ng-template #template>
+                <ul nz-menu nzInDropDown (nzClick)="close()">
+                  <li
+                    nz-menu-item
+                    value="1"
+                    (click)="playImmediately(playlist.id)"
+                  >
+                    立即播放
+                  </li>
+                  <li nz-menu-item value="2" (click)="sharePlaylist(playlist)">
+                    分享
+                  </li>
+                  <li
+                    nz-menu-item
+                    value="3"
+                    [routerLink]="['/updatePlaylist', playlist.id]"
+                  >
+                    编辑歌单
+                  </li>
+                  <li
+                    nz-menu-item
+                    value="4"
+                    (click)="deletePlaylist(playlist)"
+                    style="color: red;"
+                  >
+                    删除歌单
+                  </li>
+                </ul>
+              </ng-template>
+              <a [routerLink]="['/playlistdetail', playlist.id]" class="noWrap">
+                <i nz-icon [nzIconfont]="'icon-gedan'"></i>
+                {{ playlist.name }}
+              </a>
+            </div>
+          </nz-list-item>
+        </ng-template>
+      </nz-list>
+      <br />
+      <br />
+      <div class="windowSmallDescriptionFont">收藏的歌单</div>
+      <br />
+      <nz-list
+        nzSplit="false"
+        [nzDataSource]="userCollectionPlaylist"
+        [nzRenderItem]="userCollectionPlaylistItem"
+        [nzLoadMore]="loadMorePlaylistTpl"
+      >
+        <ng-template #userCollectionPlaylistItem let-playlist2>
+          <nz-list-item>
+            <div (contextmenu)="contextMenu($event, template2)">
+              <ng-template #template2>
+                <ul nz-menu nzInDropDown (nzClick)="close()">
+                  <li
+                    nz-menu-item
+                    value="1"
+                    (click)="playImmediately(playlist2.id)"
+                  >
+                    立即播放
+                  </li>
+                  <li nz-menu-item value="2" (click)="sharePlaylist(playlist2)">
+                    分享
+                  </li>
+                  <li
+                    nz-menu-item
+                    value="3"
+                    [routerLink]="['/updatePlaylist', playlist2.id]"
+                  >
+                    编辑歌单
+                  </li>
+                  <li
+                    nz-menu-item
+                    value="4"
+                    (click)="deletePlaylist(playlist2)"
+                    style="color: red;"
+                  >
+                    删除歌单
+                  </li>
+                </ul>
+              </ng-template>
+              <a
+                [routerLink]="['/playlistdetail', playlist2.id]"
+                class="noWrap"
+              >
+                <i nz-icon [nzIconfont]="'icon-gedan'"></i>
+                {{ playlist2.name }}
+              </a>
+            </div>
+          </nz-list-item>
+        </ng-template>
+        <ng-template #loadMorePlaylistTpl>
+          <div class="loadMoreDiv">
+            <button
+              nz-button
+              *ngIf="
+                !userPlayListPageInfo.isLoading && userPlayListPageInfo.more
+              "
+              (click)="userPlayListPageInfo.fetchNextPage()"
+            >
+              加载更多
+            </button>
+          </div>
+        </ng-template>
+      </nz-list>
+    </ng-container>
+
+    <br />
+  </nz-drawer>
+  <nz-content style="background: #f0f0f0">
+    <router-outlet></router-outlet>
+  </nz-content>
+  <nz-back-top></nz-back-top>
+  <app-footer></app-footer>
+  <div class="bottomControlPart" id="controlPart">
+    <app-control-panel class="fullWidth"></app-control-panel>
+  </div>
+</div>

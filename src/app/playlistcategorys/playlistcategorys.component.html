@@ -1,0 +1,28 @@
+<ng-container *ngFor="let categories of displayListCategories">
+  <div class="flexTopDiv">
+    <div class="noWrap categoryTitle marginH10px">
+      {{ categories.key }}
+    </div>
+
+    <nz-list
+      [nzDataSource]="categories.value"
+      [nzRenderItem]="catitem"
+      class="fullWidth"
+      [nzGrid]="{ gutter: 16, span: 4 }"
+    >
+      <ng-template #catitem let-cat>
+        <nz-list-item [nzContent]="catContent" (click)="cateClick(cat)">
+          <ng-template #catContent>
+            <div
+              class="categoryBasic noWrap marginH10px pointerCursor"
+              [class.categoryChecked]="checkedStyle(cat)"
+            >
+              <div>{{ cat.name }}</div>
+              <div *ngIf="cat.hot" class="categoryHot">HOT</div>
+            </div>
+          </ng-template>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+  </div>
+</ng-container>

@@ -1,0 +1,10 @@
+<!-- <nz-result nzStatus="404" nzTitle="404" nzSubTitle="很抱歉，你要查找的网页找不到.">
+  <div nz-result-extra>
+    <button nz-button nzType="primary" routerLink="/home">回到主页</button>
+  </div>
+</nz-result> -->
+<div class="notFoundRoot">
+  <img src="../../assets/404Image.png" >
+  <div>很抱歉，你要查找的页面不存在</div>
+  <button  [routerLink]="['/home']" >返回主页</button>
+</div>

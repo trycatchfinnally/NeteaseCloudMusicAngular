@@ -1,0 +1,161 @@
+<div>
+  <div class="margin10px">
+    <div class="flexCenterDiv" *ngIf="mvDetail">
+      <div (click)="navBackClick()" class="mvNameDiv">&lt;</div>
+      <div class="mvNameDiv">{{ mvDetail.name }}</div>
+      <ng-container *ngFor="let artist of mvDetail.artists; let idex = index">
+        <a
+          *ngIf="idex <= 3"
+          [routerLink]="['/artist', artist.id]"
+          class="smallLink"
+          >{{ artist.name }}&nbsp;</a
+        >
+      </ng-container>
+      <div class="rightPlayCount flexCenterDiv">
+        <nz-select
+          [(ngModel)]="resolutionRatio"
+          nzSize="small"
+          class="marginH10px"
+        >
+          <nz-option
+            nzValue="240"
+            nzLabel="标清"
+            *ngIf="mvDetail.url['240'] != null"
+          ></nz-option>
+          <nz-option
+            nzValue="480"
+            nzLabel="高清"
+            *ngIf="mvDetail.url['480'] != null"
+          ></nz-option>
+          <nz-option
+            nzValue="720"
+            nzLabel="超清"
+            *ngIf="mvDetail.url['720'] != null"
+          ></nz-option>
+          <nz-option
+            nzValue="1080"
+            nzLabel="1080P"
+            *ngIf="mvDetail.url['1080'] != null"
+          ></nz-option>
+        </nz-select>
+        <div class="windowSmallDescriptionFont ">
+          播放量：{{ mvDetail.playCount | countpipe }}
+        </div>
+      </div>
+    </div>
+    <div class="mvDivRoot">
+      <video id="mvDomElement" class="fullWidth fullHeight" controls></video>
+
+      <!-- <div class="mvControlPart flexCenterDiv" *ngIf="mvDetail" >
+      <button   (click)="paused=!paused" nz-button nzShape="circle"
+      nzSize="large" nzType="defalut">
+
+      <i nz-icon nzType="caret-right" nzTheme="outline" *ngIf="paused"></i>
+      <i nz-icon nzType="pause" nzTheme="outline" *ngIf="!paused"></i>
+    </button>
+    <div class="flexCenterDiv" style="width: 50%;">
+      <div>{{timespanInfo}}</div>
+    <nz-slider [nzMax]="duration" class='fullWidth' [nzRange]="false"
+        [(ngModel)]="currentTime" [nzTipFormatter]="currentTimeFormatter">
+      </nz-slider>
+    </div>
+    <div class="flexCenterDiv">
+      <div class="trackVloumnDiv" (click)="muted=!muted">
+        <i nz-icon  [nzIconfont]="'icon-shengyinwu'" *ngIf="(!muted)&&volumn==0"></i>
+        <i nz-icon  [nzIconfont]="'icon-shengyinkai'" *ngIf="(!muted)&&volumn>0"></i>
+        <i nz-icon  [nzIconfont]="'icon-shengyinjingyin'" *ngIf="muted"></i>
+      </div>
+      <nz-slider nzMax="100" style="width: 80px" [nzRange]="false" [(ngModel)]="volumn">
+      </nz-slider>
+      <nz-select [(ngModel)]="resolutionRatio" >
+        <nz-option nzValue="240" nzLabel="标清" *ngIf="mvDetail.url['240']!=null"></nz-option>
+        <nz-option nzValue="480" nzLabel="高清" *ngIf="mvDetail.url['480']!=null"></nz-option>
+        <nz-option nzValue="720" nzLabel="超清"  *ngIf="mvDetail.url['720']!=null"></nz-option>
+        <nz-option nzValue="1080" nzLabel="1080P"  *ngIf="mvDetail.url['1080']!=null"></nz-option>
+
+      </nz-select>
+    </div>
+     </div> -->
+    </div>
+    <div *ngIf="mvDetail" class="marginV10px">
+      <div nz-row nzGutter="8">
+        <div nz-col nzSpan="15">
+          <app-comment [commentThreadId]="mvDetail.commendThreadId">
+          </app-comment>
+        </div>
+        <div nz-col nzSpan="9">
+          <div class="windowMainFont mvDesciptionHeader">MV介绍</div>
+          <nz-divider></nz-divider>
+          <div class="windowSmallDescriptionFont">
+            发布时间：{{ mvDetail.publishTime | date: "yyyy-MM-dd" }}
+          </div>
+          <div class="windowSmallDescriptionFont marginV10px">
+            <div *ngIf="!mvDetail.desc">暂无介绍</div>
+            <div *ngIf="mvDetail.desc">{{ mvDetail.desc }}</div>
+          </div>
+          <div class="windowMainFont mvDesciptionHeader">相关MV</div>
+          <div class="marginV10px" style="opacity: 0;">不起作用</div>
+          <nz-list
+            [nzDataSource]="simiMvs"
+            [nzRenderItem]="simiMvItem"
+            class="marginV10px simiMvList"
+          >
+            <ng-template #simiMvItem let-simiMv>
+              <nz-list-item [nzContent]="mvcontent">
+                <ng-template #mvcontent>
+                  <nz-card class="fullWidth fullHeight"
+                    nzHoverable
+                    [nzCover]="coverTemplate"
+                    [routerLink]="['/mv', simiMv.id]"
+                  >
+                    <nz-card-meta
+                      [nzTitle]="simiMv.name"
+                      [nzDescription]="descriptionTemplate"
+                      class="noWrap"
+                    >
+                    </nz-card-meta>
+                    <ng-template #coverTemplate>
+                      <!-- <div class="card-image">
+                      
+                    </div> -->
+
+                      <div
+                        class="card-back"
+                        [style.background-image]="'url(' + simiMv.picUrl + ')'"
+                      >
+                        <div class="flexLastFull"></div>
+
+                        <div class="inlineCount">
+                          <i nz-icon [nzIconfont]="'icon-call'"></i>
+                          {{ simiMv.playCount | countpipe }}
+                        </div>
+                      </div>
+                    </ng-template>
+                    <ng-template #descriptionTemplate>
+                      <div *ngIf="simiMv.artists" class="flexCenterDiv">
+                        <div
+                          *ngFor="
+                            let mvArtist of simiMv.artists;
+                            let mvArtistIndex = index
+                          "
+                        >
+                          <div
+                            class="listItemHor noWrap"
+                            *ngIf="mvArtistIndex <= 3"
+                            style="margin-left: 0;"
+                          >
+                            {{ mvArtist.name }}
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </nz-card>
+                </ng-template>
+              </nz-list-item>
+            </ng-template>
+          </nz-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

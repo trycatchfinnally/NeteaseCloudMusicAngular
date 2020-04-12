@@ -1,0 +1,22 @@
+ <div>
+ 
+   
+    <textarea  nz-input  [(ngModel)]="commentContent" rows="4"
+    placeholder="想说些什么" maxlength="140"></textarea>
+
+    <div class="flexReverseCenterDiv marginV10px">
+      <div class="marginH10px pointerCursor">@</div>
+      <div class="marginH10px pointerCursor"><i nz-icon nzType="smile" nzTheme="outline"></i></div>
+      <div class="flexCenterDiv fullWidth">
+        <div>{{140-commentContent.length}}</div>
+      </div>
+    </div>
+  
+<div class="flexReverseCenterDiv">
+  <button nz-button nzType="danger"  [nzLoading]="submitLoadding" class="marginH10px"
+  [disabled]="!commentContent||commentContent.length==0" (click)="commentCommint()">评论</button>
+  <div class="fullWidht"></div>
+</div>
+ </div>
+
+ 

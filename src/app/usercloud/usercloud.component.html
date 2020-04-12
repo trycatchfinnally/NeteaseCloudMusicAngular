@@ -1,0 +1,115 @@
+<div class="margin10px">
+  <div class="windowSmallDescriptionFont marginV10px" *ngIf="userCloudMusic">
+    <div class="flexCenterDiv noWrap">
+      <div>
+        我的音乐云盘：{{ userCloudMusic.usedSizeString }}/{{
+          userCloudMusic.totalSizeString
+        }}
+      </div>
+      <div class="marginH10px fullWidth">
+        <nz-progress
+          [nzPercent]="userCloudMusic.usePercent"
+          [nzShowInfo]="false"
+        ></nz-progress>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottomListPart">
+    <nz-list
+      [nzDataSource]="userCloudMusic.data"
+      [nzRenderItem]="item"
+      id="lstMain"
+      [nzLoadMore]="loadMoreTpl"
+    >
+      <ng-template #item let-cloudMusic>
+        <div class="nothing" (click)="playOrSelected(cloudMusic)">
+          <div class="windowSmallFont bottomListItem">
+            <ng-container *ngIf="cloudMusic.simpleMusic">
+              <div style="padding-right: 2px">{{ cloudMusic.name }}</div>
+              <div *ngIf="cloudMusic.simpleMusic.mvId > 0">
+                <a
+                  [routerLink]="['/mv', cloudMusic.simpleMusic.mvId]"
+                  class="bottomListItemMv"
+                  >MV</a
+                >
+              </div>
+              <div class="flexLastFull"></div>
+              <div
+                class="bottomListItemRightPart noWrap windowSmallDescriptionFont"
+              >
+                <div nz-row nzGutter="8" class="fullWidth">
+                  <div nz-col nzSpan="10">
+                    <ng-container>
+                      <ng-container
+                        *ngFor="
+                          let artist of cloudMusic.simpleMusic.artists;
+                          let idex = index
+                        "
+                      >
+                        <a
+                          *ngIf="idex <= 3"
+                          [routerLink]="['/artist', artist.id]"
+                          [class.smallLink_disabled]="artist.id == 0"
+                          class="smallLink"
+                          >{{ artist.name }}&nbsp;</a
+                        >
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                  <div nz-col nzSpan="9">
+                    <a
+                      [routerLink]="['/album', cloudMusic.simpleMusic.album.id]"
+                      class="smallLink"
+                      [class.smallLink_disabled]="
+                        cloudMusic.simpleMusic.album.id == 0
+                      "
+                      >{{ cloudMusic.album }}</a
+                    >
+                  </div>
+                  <div nz-col nzSpan="5">
+                    {{ cloudMusic.simpleMusic.duration | duration }}
+                  </div>
+                  <!-- <div nz-col nzSpan="2"></div> -->
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!cloudMusic.simpleMusic">
+              <div style="padding-right: 2px">{{ cloudMusic.name }}</div>
+              <div class="flexLastFull"></div>
+              <div
+                class="bottomListItemRightPart noWrap windowSmallDescriptionFont"
+              >
+                <div nz-row nzGutter="8" class="fullWidth">
+                  <div nz-col nzSpan="10">
+                    <ng-container>
+                      <div class="smallLink">{{ cloudMusic.artist }}&nbsp;</div>
+                    </ng-container>
+                  </div>
+                  <div nz-col nzSpan="9">
+                    <div class="smallLink" style="width: 150px">
+                      {{ cloudMusic.album }}
+                    </div>
+                  </div>
+                  <div nz-col nzSpan="5">00:00</div>
+                  <!-- <div nz-col nzSpan="2"></div> -->
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #loadMoreTpl>
+        <div class="loadMoreDiv">
+          <button
+            nz-button
+            *ngIf="!userCloudMusic.isLoading && userCloudMusic.more"
+            (click)="userCloudMusic.fetchNextPage()"
+          >
+            加载更多
+          </button>
+        </div>
+      </ng-template>
+    </nz-list>
+  </div>
+</div>

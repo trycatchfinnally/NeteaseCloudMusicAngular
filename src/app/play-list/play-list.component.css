@@ -1,0 +1,18 @@
+.categoryPanel {
+    overflow-y:auto; overflow-x: hidden;
+    height: 500px;
+}
+
+
+.categoryDropdown {
+  height: auto;
+  background: transparent;
+}
+
+
+.card-back{
+  background-size: cover;
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+}

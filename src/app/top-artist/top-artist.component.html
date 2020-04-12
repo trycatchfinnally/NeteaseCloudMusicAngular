@@ -1,0 +1,35 @@
+<div class="margin10px">
+  <div class="windowSmallDescriptionFont marginV10px">
+    <div>云音乐歌手榜</div>
+    <div class="updateDate">
+      <div class="flexCenterDiv">
+        <div>最近更新：{{ updateDate | date: "yyyy年MM月dd日" }}</div>
+      </div>
+    </div>
+  </div>
+  
+  <nz-tabset class="fullWidth windowSmallDescriptionFont">
+    <ng-container *ngFor="let artistList of artistLists">
+      <nz-tab
+        [nzTitle]="artistList.key"
+        (nzSelect)="tabSelect(artistList.key)"
+      >
+        <div
+          class="nothing"
+          *ngFor="let artist of artistList.value; let artistIndex = index"
+        >
+          <div
+            class="flexCenterDiv pointerCursor"
+            [routerLink]="['/artist', artist.id]"
+          >
+            <div>{{ (artistIndex + 1).toString().padStart(2, "0") }}</div>
+            <div class="marginH10px">-</div>
+            <img [src]="artist.picUrl" alt="" class="artistImg marginV10px" />
+            <div class="marginH10px windowSmallFont">{{ artist.name }}</div>
+            <div class="hotScoreDiv">热度：{{ artist.hotScore }}</div>
+          </div>
+        </div>
+      </nz-tab>
+    </ng-container>
+  </nz-tabset>
+</div>

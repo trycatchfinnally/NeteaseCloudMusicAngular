@@ -1,0 +1,213 @@
+<audio id="mainPlayer" hidden></audio>
+
+<div class="flexCenterDiv">
+  <div class="flexCenterDiv marginH10px">
+    <button
+      *ngIf="audioService.CurrentPlayTrackType != 1000"
+      class="nextTrackButton"
+      nz-button
+      nzShape="circle"
+      (click)="audioService.previous()"
+      nzSize="defalut"
+    >
+      <i nz-icon nzType="step-backward" nzTheme="outline"></i>
+    </button>
+    <button
+      class="playTrackButton"
+      (click)="audioService.paused = !audioService.paused"
+      nz-button
+      nzShape="circle"
+      nzSize="large"
+      nzType="defalut"
+    >
+      <i
+        nz-icon
+        nzType="caret-right"
+        nzTheme="outline"
+        *ngIf="audioService.paused"
+      ></i>
+      <i
+        nz-icon
+        nzType="pause"
+        nzTheme="outline"
+        *ngIf="!audioService.paused"
+      ></i>
+    </button>
+    <button
+      class="nextTrackButton"
+      nz-button
+      nzShape="circle"
+      nzSize="defalut"
+      (click)="nextClick()"
+    >
+      <i nz-icon nzType="step-forward" nzTheme="outline"></i>
+    </button>
+  </div>
+  <img
+    (click)="musicImgClick()"
+    [src]="
+      audioService.currentTrack && audioService.currentTrack.picUrl
+        ? audioService.currentTrack.picUrl
+        : '../../assets/Vinyl_music_128px.png'
+    "
+    class="trackImg"
+  />
+  <!-- 中间进度条和名称部分 -->
+  <div class="fullWidth">
+    <div *ngIf="audioService.currentTrack" class="trackName">
+      {{ audioService.currentTrack.name }}
+    </div>
+    <div class="flexCenterDiv">
+      <nz-slider
+        [nzMax]="audioService.duration"
+        class="fullWidth"
+        [nzRange]="false"
+        [(ngModel)]="audioService.currentTime"
+        [nzTipFormatter]="currentTimeFormatter"
+        [nzDisabled]="audioService.srcLoadding"
+      >
+      </nz-slider>
+      <div>{{ timespanInfo }}</div>
+    </div>
+  </div>
+  <!-- 中间进度条和名称部分 -->
+  <!-- 右边控制按钮部分 -->
+  <div class="flexCenterDiv marginH10px">
+    <nz-popover [nzTitle]="nzTitle" [nzPlacement]="'topLeft'">
+      <div class="trackVloumnDiv" nz-popover>
+        <!-- <i class="anticon anticon-bars"></i>  -->
+        <i nz-icon nzType="bars" nzTheme="outline"></i>
+      </div>
+      <ng-template #nzTemplate>
+        <nz-list
+          [nzDataSource]="musicCollection"
+          [nzRenderItem]="trackItem"
+          id="lstPlayLst"
+          style="height: 350px;overflow-x:Hidden;Overflow-y:auto;"
+        >
+          <ng-template #trackItem let-track>
+            <div
+              class="popoverContentRoot noWrap"
+              (click)="playListItemClick(track)"
+            >
+              <div nz-row nzGutter="8" style="width: inherit">
+                <div nz-col nzSpan="9">{{ track.name }}</div>
+                <div nz-col nzSpan="6">
+                  <ng-container
+                    *ngFor="let artist of track.artists; let idex = index"
+                  >
+                    <a
+                      *ngIf="idex <= 3"
+                      [routerLink]="['/artist', artist.id]"
+                      class="smallLink"
+                      >{{ artist.name }}&nbsp;</a
+                    >
+                  </ng-container>
+                </div>
+                <div nz-col nzSpan="6">
+                  <a
+                    [routerLink]="['/album', track.album.id]"
+                    class="smallLink"
+                    >{{ track.album.name }}</a
+                  >
+                </div>
+                <div nz-col nzSpan="3">
+                  {{ track.duration | duration }}
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </nz-list>
+      </ng-template>
+      <ng-template #nzTitle>
+        <div class="flexCenterDiv" style="width: 400px">
+          <div class="windowMainFont">播放列表</div>
+          <div style="width:160px"></div>
+          <div class="popoverTitleLink">
+            <i nz-icon nzType="folder-add" nzTheme="outline"></i>
+            收藏全部
+          </div>
+          <div class="popoverTitleLink" (click)="clearAllClick()">
+            <i nz-icon nzType="delete" nzTheme="outline"></i>
+            清空
+          </div>
+        </div>
+      </ng-template>
+    </nz-popover>
+
+    <div
+      class="trackVloumnDiv"
+      nz-tooltip
+      nzTitle="收藏"
+      (click)="
+        audioService.currentTrack
+          ? collectionService.collectionMusic(audioService.currentTrack.id)
+          : ''
+      "
+    >
+      <i nz-icon nzType="folder-add" nzTheme="outline"></i>
+    </div>
+    <ng-container [ngSwitch]="audioService.playCycleMode">
+      <div
+        class="trackVloumnDiv"
+        nz-tooltip
+        nzTitle="列表循环"
+        (click)="audioService.playCycleMode = 1"
+        *ngSwitchCase="0"
+      >
+        <i nz-icon nzType="retweet" nzTheme="outline"></i>
+      </div>
+      <div
+        class="trackVloumnDiv"
+        nz-tooltip
+        nzTitle="单曲循环"
+        (click)="audioService.playCycleMode = 2"
+        *ngSwitchCase="1"
+      >
+        <i nz-icon [nzIconfont]="'icon-single-loop'"></i>
+      </div>
+      <div
+        class="trackVloumnDiv"
+        nz-tooltip
+        nzTitle="随机播放"
+        (click)="audioService.playCycleMode = 0"
+        *ngSwitchCase="2"
+      >
+        <i nz-icon [nzIconfont]="'icon-random'"></i>
+      </div>
+    </ng-container>
+    <div class="trackVloumnDiv" nz-tooltip nzTitle="分享">
+      <i nz-icon nzType="share-alt" nzTheme="outline"></i>
+    </div>
+    <div class="flexCenterDiv">
+      <div
+        class="trackVloumnDiv"
+        (click)="audioService.muted = !audioService.muted"
+      >
+        <i
+          nz-icon
+          [nzIconfont]="'icon-shengyinwu'"
+          *ngIf="!audioService.muted && audioService.volumn == 0"
+        ></i>
+        <i
+          nz-icon
+          [nzIconfont]="'icon-shengyinkai'"
+          *ngIf="!audioService.muted && audioService.volumn > 0"
+        ></i>
+        <i
+          nz-icon
+          [nzIconfont]="'icon-shengyinjingyin'"
+          *ngIf="audioService.muted"
+        ></i>
+      </div>
+      <nz-slider
+        nzMax="100"
+        style="width: 80px"
+        [nzRange]="false"
+        [(ngModel)]="audioService.volumn"
+      >
+      </nz-slider>
+    </div>
+  </div>
+  <!-- 右边控制按钮部分 -->
+</div>

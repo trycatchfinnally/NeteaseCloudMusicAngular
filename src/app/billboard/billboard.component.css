@@ -1,0 +1,27 @@
+.card-back{
+    background-size: cover;
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+}
+.updateFrequencyDiv{
+    color: #fff;
+    padding: 10px 5px;
+}
+.officialTopListItem{
+padding: 2px;
+border: #80808045;
+border-width: thin;
+border-style: solid;
+border-radius: 4px;
+}
+.officialTopListItem img{
+    width: 120px;
+    height: 120px;
+}
+.officialTopListUpdateFrequencyDiv{
+    color: #fff;
+    position: absolute;
+    left: 10px;
+    top: 12px;
+}

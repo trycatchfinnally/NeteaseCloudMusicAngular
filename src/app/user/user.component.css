@@ -1,0 +1,18 @@
+.vipLevelDiv{
+    border: gray;
+    border-radius: 10px;
+    border-style: groove;
+    border-width: thin;
+    padding: 0 3px;
+}
+.topControlDiv{
+    float: right;
+}
+.userCountAlign{ text-align: center;}
+.card-back{
+    background-size: cover;
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+}
+.marginto10px{margin-top: 10px;}

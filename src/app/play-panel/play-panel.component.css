@@ -1,0 +1,108 @@
+.topLrcPart {
+  height: 400px;
+  display: flex;
+}
+.topDiskPart {
+  width: 350px;
+}
+.topDiskImg {
+  height: 250px;
+  margin: 30px;
+  width: 250px;
+  background-size: contain;
+  transform: rotate(0deg);
+  animation: rot 5s linear infinite;
+}
+@keyframes rot {
+  form {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.topImgClip {
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  clip-path: circle(80px at 50% 50%);
+}
+
+.fmControlPartFather > div {
+  font-size: 15px;
+  border-width: thin;
+  border-style: none;
+  padding: 3px;
+  margin: 5px;
+}
+ 
+.otherControlPartFather > div {
+  font-size: 15px;
+  border: solid;
+  border-width: thin;
+  border-style: solid;
+  padding: 3px;
+  margin: 5px;
+  cursor: pointer;
+}
+.topPartControl:hover {
+  background: #bcbcbc;
+}
+.topImgRotate {
+  position: absolute;
+  transform-origin: 10% 15%;
+  width: 100px;
+  z-index: 99;
+  margin-left: 125px;
+}
+.topLrcRight {
+  float: left;
+  width: 100%;
+  margin: 20px;
+}
+.topLrcRightLinks {
+  margin-right: 20px;
+}
+.topLrcRightLinks a {
+  color: blue;
+}
+.topLrcPanel {
+  margin-top: 40px;
+}
+.topLrcPanel ul {
+  position: relative;
+  height: 250px;
+  overflow-y: auto;
+}
+.topLrcPanel li {
+  margin-bottom: 5px;
+  cursor: pointer;
+  list-style: none;
+}
+.descriptHeader {
+  text-align: center;
+  float: left;
+  font-size: 16px;
+}
+.commentRightPart {
+  font-size: 16px;
+}
+.simiMusicDiv {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 35px;
+  padding: 0 10px 0 0;
+}
+.simiMusicDiv .artist {
+  float: right;
+}
+#lstSimiMusic .nothing:nth-of-type(even) {
+  background: #dcdcdc;
+}
+#lstSimiMusic .nothing:nth-of-type(odd) {
+  background: transparent;
+}
+#lstSimiMusic .nothing:hover {
+  background: #bcbcbd;
+}

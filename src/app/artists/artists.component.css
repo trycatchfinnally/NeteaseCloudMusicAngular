@@ -1,0 +1,11 @@
+.selectedCat{
+    color: brown;
+}
+.description{font-size: smaller;
+flex-wrap: wrap ; color: black; line-height: 3em;}
+.card-back{
+    background-size: cover;
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+}

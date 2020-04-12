@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "http://www.cqjtu.xyz/",
+    "secure": false
+  }
+}

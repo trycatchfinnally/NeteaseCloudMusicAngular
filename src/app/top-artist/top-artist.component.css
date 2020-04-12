@@ -1,0 +1,13 @@
+.updateDate{
+    float: right;
+    right: 10px;
+}
+.artistImg{
+    width: 96px;
+    height: 96px;
+
+}
+.hotScoreDiv{
+    position: absolute;
+    right: 40px;
+}

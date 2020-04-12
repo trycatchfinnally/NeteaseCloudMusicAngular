@@ -1,0 +1,57 @@
+ 
+.topDayCard{
+    background: white;
+    color: rgba(188, 47, 46, 255);
+    font-size: 140px;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+
+}
+ 
+.centerControlPart{
+    display: flex;
+    height: 30px;
+   align-items: center
+}
+.ceterSelectModePart{
+    color: blue;
+    cursor: pointer;
+}
+.bottomListPart{
+    border: 0ch;
+    margin: 20px 0
+}
+.bottomListItem{
+    display: flex;
+    align-items: center;
+    padding: 2px 20px;
+    height: 30px;
+}
+/* .bottomListItem:hover{
+    background: #bcbcbd
+} */
+.bottomListItemMv{
+    padding-right: 5px;
+    border: red;
+color: red;
+border-width:1px;
+border-style: solid;
+font-size: xx-small;
+}
+.bottomListItemRightPart{
+    float: right;
+    display: flex;
+    align-items: center;
+    width: 400px;
+}
+#lstMain .nothing:nth-of-type(even){
+    background: #dcdcdc
+}
+#lstMain .nothing:nth-of-type(odd){
+    background: transparent
+}
+#lstMain .nothing:hover{
+    background: #bcbcbd
+
+}
