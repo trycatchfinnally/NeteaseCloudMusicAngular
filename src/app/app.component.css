@@ -41,7 +41,7 @@
 nz-list-item   a {
   color: black;
 }
-::ng-deep .vertical-center-modal {
+body /deep/ .vertical-center-modal {
   display: flex;
   align-items: center;
   justify-content: center;

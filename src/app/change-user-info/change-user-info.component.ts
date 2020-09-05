@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { LoggerService } from "../service/logger.service";
 import { DefaultHttpService } from "../service/default-http-service";
 import { Province } from "../DominModel/province";
-import { forEach } from "@angular/router/src/utils/collection";
+ 
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { User } from "../DominModel/user";
 import { LoginServiceService } from "../service/login-service.service";

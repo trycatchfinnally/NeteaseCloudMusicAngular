@@ -31,7 +31,7 @@ const INTERVAL = 500;
   styleUrls: ["./play-panel.component.css"]
 })
 export class PlayPanelComponent implements OnInit {
-  @ViewChild("lrcUl") lrcUl: ElementRef;
+  @ViewChild("lrcUl", { static: true }) lrcUl: ElementRef;
   public lyrics: Lyric[] = [];
   public isMouseOver = false;
   public isLrcLoading = false;

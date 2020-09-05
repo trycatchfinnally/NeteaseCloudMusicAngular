@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://www.cqjtu.xyz/",
+    "target": "http://home.cqbn.xyz:1080/",
     "secure": false
   }
 }

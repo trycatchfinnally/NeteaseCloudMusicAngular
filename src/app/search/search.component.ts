@@ -62,7 +62,7 @@ const searchHistoryMaxCacheLength = 10;
 
 
 export class SearchComponent implements OnInit {
-  @ViewChild("inputKeyWord") inputKeyWord: ElementRef;
+  @ViewChild("inputKeyWord", { static: true }) inputKeyWord: ElementRef;
  public searchKey: string;
  public searchHots: string[];
  public searchHistory: string[] = [];

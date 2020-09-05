@@ -17,7 +17,7 @@ import { RegisterService } from '../service/register.service';
   styleUrls: ["./header.component.css"]
 })
 export class HeaderComponent implements OnInit {
-  @ViewChild("inputKeyWord") inputKeyWord: ElementRef;
+  @ViewChild("inputKeyWord", { static: true }) inputKeyWord: ElementRef;
   private inputKeyWordObservable;
   // private _isLoginRequest =false;
   // private _loginInUser:User=null;

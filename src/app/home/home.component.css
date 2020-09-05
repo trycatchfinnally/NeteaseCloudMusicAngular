@@ -43,7 +43,7 @@
     max-width: 240px;
 } */
 
-.playlist ::ng-deep .ant-row {
+.playlist /deep/ .ant-row {
   display: flex;
   flex-wrap: wrap;
 }

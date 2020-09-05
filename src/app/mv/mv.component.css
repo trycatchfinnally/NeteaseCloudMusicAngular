@@ -35,7 +35,7 @@ background-color:#000;
     font-size: small
     
 }
- .simiMvList ::ng-deep .ant-list-item-content {
+ .simiMvList /deep/ .ant-list-item-content {
      width: 100%;
  }
  

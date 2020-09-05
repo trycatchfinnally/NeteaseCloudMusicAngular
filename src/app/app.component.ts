@@ -63,7 +63,7 @@ export class AppComponent {
       x => x.createUser.userId != this.loginServerice.loginUser.userId
     );
   }
-  @ViewChild("drawer") drawer: any;
+  @ViewChild("drawer", { static: false }) drawer: any;
   constructor(
     private addToPlayServiceFactory: AddToPlayServiceFactoryService,
     private nzDropdownService: NzDropdownService,

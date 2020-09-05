@@ -66,7 +66,7 @@ export class PlaylistDetailComponent implements OnInit {
   public searchKey: string;
   public addToPlayService: AddtoplayService;
 
-  @ViewChild("searchInput") searchInput: ElementRef;
+  @ViewChild("searchInput", { static: false }) searchInput: ElementRef;
   constructor(
     private http: DefaultHttpService,
     private logger: LoggerService,

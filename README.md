@@ -1,5 +1,5 @@
 # 项目概述
-本项目为网易云音乐的Angular实现，为本人Angular学习练手之作，后端采用 .net core webapi提供数据，本部分源代码为前端部分。
+本项目为网易云音乐的Angular实现，为本人Angular学习练手之作，后端采用 .net core webapi提供数据，本部分源代码为前端部分，完整的git版本日志位于vsts上。
 <br>
 附个人入门资料 [资料](./src/Angular5Practice.pdf)
 ## 演示地址(请在现代浏览器下使用)
@@ -9,8 +9,10 @@
 国外: https://www.cqjtu.xyz
 
 # 如何运行
-
-git clone项目源代码，cd到ClientApp目录下，输入ng server --proxy-config proxy.config.json即可
+1、git clone项目源代码<br>
+2、npm install<br>
+3、ng serve --proxy-config proxy.config.json
+ 
 # 反馈
 欢迎交流 t1246539858@outlook.com
 # 项目部分截图

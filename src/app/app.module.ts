@@ -46,7 +46,7 @@ import { ChangeUserInfoComponent } from './change-user-info/change-user-info.com
 import { NzRegisterModalCustomComponent } from './nz-register-modal-custom/nz-register-modal-custom.component';
 import { UpdatePlaylistComponent } from './update-playlist/update-playlist.component';
 import { PlaylistcategorysComponent } from './playlistcategorys/playlistcategorys.component';
-
+ 
 registerLocaleData(zh);
 @NgModule({
   declarations: [
