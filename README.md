@@ -1,10 +1,11 @@
 # 项目概述
 本项目为网易云音乐的Angular实现，为本人Angular学习练手之作，后端采用 .net core webapi提供数据，本部分源代码为前端部分，完整的git版本日志位于vsts上。
+工作繁忙，更新不及时，请见谅
 <br>
 附个人入门资料 [资料](./src/Angular5Practice.pdf)
 ## 演示地址(请在现代浏览器下使用)
 首次加载可能耗时较长，请理解<br>
-国内：https://www.cqbn.xyz
+国内：http://home.cqbn.xyz:1080
 <br>
 国外: https://www.cqjtu.xyz
 
